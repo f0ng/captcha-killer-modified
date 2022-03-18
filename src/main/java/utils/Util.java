@@ -38,7 +38,7 @@ public class Util {
                         + "[*]   github: http://github.com/c0ny1/captcha-killer\n"
                         + "[*] ###################################################\n"
                         + "[*]  modifier: f0ng\n"
-                        + "[*]  github: http://github.com/f0ng/captcha-killer-modified"
+                        + "[*]  github: http://github.com/f0ng/captcha-killer-modified\n"
                         + "[!] Install " + extName + " successful!\n"
                         + "[*] Please enjoy it ^_^\n"
                         + "[*] ";
