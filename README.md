@@ -17,5 +17,4 @@
 识别成功率在85%左右。
 
 具体修改请查看微信公众号文章
-
-https://mp.weixin.qq.com/s?__biz=MzkzNzE4MTk4Nw==&mid=2247484153&idx=1&sn=88f64dfd53c521b752f4ef327d065789&chksm=c29214b5f5e59da38eae3d1fd4ce352f0bf9506dec33fccac48aefb56015c4f2cc74c9d5b6da&token=631725442&lang=zh_CN#rd
+https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
