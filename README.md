@@ -1,14 +1,19 @@
-# captcha-killer-modified
+# captcha-killer-modified 适配新版Burpsuite
 
 ## 原项目地址：
 
 ## https://github.com/c0ny1/captcha-killer
+
 
 1.修改了原项目中`sun.misc.BASE64Encoder`报错的问题
 
 2.优化了验证码`data:image`识别问题
 
 3.添加了ddddocr验证码识别库
+
+<img width="1439" alt="image" src="https://user-images.githubusercontent.com/48286013/159115886-7e482f8e-d36a-416a-8b67-c535e741d114.png">
+
+
 
  <img src="https://user-images.githubusercontent.com/48286013/159009462-b028fb9f-05de-4c82-ae72-f576fa0adf8c.png" width="160" height="800" />
  
