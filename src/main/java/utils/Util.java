@@ -47,12 +47,16 @@ public class Util {
 
     public static boolean isImage(String str_img) throws IOException {
 //        System.out.println(str_img);
-        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
+        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]|([B|b]ase64\".*)[\"|&]";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
-            str_img = m.group(0).replace("\"","").replace("&","") ;
+            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
         }
+        if (!str_img.contains("data:image")){
+            str_img = "data:image/jpeg;base64," + str_img;
+        }
+
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         boolean isImg = false;
         InputStream buffin = new ByteArrayInputStream(img);
@@ -67,11 +71,15 @@ public class Util {
     }
 
     public static byte[] dataimgToimg(String str_img) throws IOException {
-        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
+        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]|([B|b]ase64\".*)[\"|&]";
+
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
-            str_img = m.group(0).replace("\"","").replace("&","") ;
+            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
+        }
+        if (!str_img.contains("data:image")){
+            str_img = "data:image/jpeg;base64," + str_img;
         }
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         InputStream buffin = new ByteArrayInputStream(img);
