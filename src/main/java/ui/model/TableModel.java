@@ -59,11 +59,14 @@ public class TableModel extends AbstractTableModel {
                 case 0:
                     String strr = new String(captcha.getImage());
                     if (  (strr.contains("data:image") && !strr.startsWith("data:image")) || (strr.contains("data%3Aimage") && !strr.startsWith("data%3Aimage")) ){
-                        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
+                        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]|([B|b]ase64\".*)[\"|&]";
                         Pattern r = Pattern.compile(pattern);
                         Matcher m = r.matcher(strr);
                         if (m.find( )) {
-                            strr = m.group(0).replace("\"","").replace("&","") ;
+                            strr = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
+                        }
+                        if (!strr.contains("data:image")){
+                            strr = "data:image/jpeg;base64," + strr;
                         }
                         byte[] byteImage = DatatypeConverter.parseBase64Binary(strr.substring(strr.indexOf(",") + 1));
                         ImageIcon icon = byte2img(byteImage);
