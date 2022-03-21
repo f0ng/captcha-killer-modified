@@ -23,3 +23,8 @@
 
 具体修改请查看微信公众号文章
 https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
+
+
+## 更新日志
+
+【2022-3-21】 增加可识别情况，当出现关键字为B/base64时，进行验证码识别
