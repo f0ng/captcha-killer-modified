@@ -45,9 +45,9 @@ public class Util {
         return bannerInfo;
     }
 
-    public static boolean isImage(String str_img) throws IOException {
+    public static boolean isImage(String str_img,String words) throws IOException {
 //        System.out.println(str_img);
-        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]|([B|b]ase64\".*)[\"|&]";
+        String pattern = "(" + words + ".*?)[,&}/+=\\w]+";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
@@ -70,8 +70,34 @@ public class Util {
         return isImg;
     }
 
+    public static boolean isImage(String str_img) throws IOException {
+//        System.out.println(str_img);
+        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(str_img);
+        if (m.find( )) {
+            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
+        }
+        if (!str_img.contains("data:image")){
+            str_img = "data:image/jpeg;base64," + str_img;
+        }
+
+        byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
+        boolean isImg = false;
+        InputStream buffin = new ByteArrayInputStream(img);
+        BufferedImage image = ImageIO.read(buffin);
+        if(image == null){
+            isImg = false;
+        }else {
+            isImg = true;
+        }
+        System.out.println(image);
+        System.out.println(isImg);
+        return isImg;
+    }
+
     public static byte[] dataimgToimg(String str_img) throws IOException {
-        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]|([B|b]ase64\".*)[\"|&]";
+        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
 
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
@@ -83,6 +109,25 @@ public class Util {
         }
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         InputStream buffin = new ByteArrayInputStream(img);
+        return img;
+    }
+
+    public static byte[] dataimgToimg(String str_img,String words) throws IOException {
+        String pattern = "(" + words + ".*?)[,&}/+=\\w]+";
+
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(str_img);
+        if (m.find( )) {
+            str_img = m.group(0).replace("\"","").replace(words,"").replace(":","").replace("&","").replace(",","") ;
+        }
+        if (!str_img.contains("data:image")){
+            str_img = "data:image/jpeg;base64," + str_img;
+        }
+        //str_img = str_img;
+        System.out.println(str_img);
+        System.out.println(str_img.indexOf(","));
+        byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
+        //InputStream buffin = new ByteArrayInputStream(img);
         return img;
     }
 
@@ -308,7 +353,7 @@ public class Util {
         return count;
     }
 
-    public static byte[] requestImage(String url,String raw){
+    public static byte[] requestImage(String url,String raw) throws IOException {
         if(Util.isURL(url)) {
             HttpClient http = new HttpClient(url, raw, null);
             byte[] rsp = http.doReust();
