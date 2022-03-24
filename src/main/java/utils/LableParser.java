@@ -6,6 +6,8 @@
  * description: 该类用于解析接口请求包中的标签
  */
 package utils;
+import burp.BurpExtender;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.bind.DatatypeConverter;
@@ -20,7 +22,7 @@ public class LableParser {
     }
 
 
-    public String parseAllLable(String str){
+    public String parseAllLable(String str) throws IOException {
         String reqTpl = str;
 
 
@@ -47,7 +49,7 @@ public class LableParser {
      * @param str
      * @return
      */
-    private String parseOneLable(String str){
+    private String parseOneLable(String str) throws IOException {
         String parseRes = "";
         String lable = str.substring(str.indexOf("<@")+2,str.indexOf(">"));
         if(!lable.equals(null)&&!lable.trim().equals("")) {
@@ -80,7 +82,7 @@ public class LableParser {
      * @param str
      * @return
      */
-    private String parseOneLableByRegular(String str){
+    private String parseOneLableByRegular(String str) throws IOException {
         String parseRes = "";
         String regular1 = "<@(.*?)>";
         String lable = matchByRegular(str,regular1);
@@ -103,7 +105,7 @@ public class LableParser {
     }
 
 
-    private String encdoeLable(String type,String str){ // 处理请求编码
+    private String encdoeLable(String type,String str) throws IOException { // 处理请求编码
         String encodeStr = "";
 
         switch (type){
@@ -127,19 +129,27 @@ public class LableParser {
             case "IMG_RAW":
 //                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 String strr = new String(byteImage);
-                if ( (strr.contains("data:image") && !strr.startsWith("data:image")) || (strr.contains("data%3Aimage") && !strr.startsWith("data%3Aimage")) ){
-                    strr = new String(byteImage);
-                    String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]|([B|b]ase64\".*)[\"|&]";
-                    Pattern r = Pattern.compile(pattern);
-                    Matcher m = r.matcher(strr);
-                    if (m.find( )) {
-                        strr = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
-                    }
-                    if (!strr.contains("data:image")){
-                        strr = "data:image/jpeg;base64," + strr;
-                    }
+                String words = BurpExtender.gui.tfWords.getText();
+
+
+                if (!words.equals("") && strr.contains(words)){
+                    byteImage = dataimgToimg(strr,words);
+
+                }else {
+                    if ((strr.contains("data:image") && !strr.startsWith("data:image")) || (strr.contains("data%3Aimage") && !strr.startsWith("data%3Aimage"))) {
+                        //strr = new String(byteImage);
+                        String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
+                        Pattern r = Pattern.compile(pattern);
+                        Matcher m = r.matcher(strr);
+                        if (m.find()) {
+                            strr = m.group(0).replace("\"", "").replace("&", "").replace("Base64:", "").replace("base64:", "");
+                        }
+                        if (!strr.contains("data:image")) {
+                            strr = "data:image/jpeg;base64," + strr;
+                        }
 //                    byteImage = strr.getBytes();
-                    byteImage = DatatypeConverter.parseBase64Binary(strr.substring(strr.indexOf(",") + 1));
+                        byteImage = DatatypeConverter.parseBase64Binary(strr.substring(strr.indexOf(",") + 1));
+                    }
                 }
                  //注意：byte[]转string后，string再转byte[]无法还原的，故该地方采用base64编码存储byte[]，等到使用时在解码为byte[]。
                 String base64Img = base64Encode(byteImage);
