@@ -11,6 +11,8 @@
 
 3.添加了ddddocr验证码识别库
 
+4.增加自定义关键词获取验证码
+
 <img width="1439" alt="image" src="https://user-images.githubusercontent.com/48286013/159115886-7e482f8e-d36a-416a-8b67-c535e741d114.png">
 
 
