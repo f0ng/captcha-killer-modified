@@ -27,4 +27,11 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 ## 更新日志
 
-【2022-3-21】 增加可识别情况，当出现关键字为B/base64时，进行验证码识别
+
+【2022-3-21】 增加可识别情况，~~当出现关键字为B/base64时，进行验证码识别~~
+
+【2022-3-24】 增加自定义关键字，删减锁定按钮
+
+<img width="630" alt="image" src="https://user-images.githubusercontent.com/48286013/159827943-7ee4480c-b090-42e6-a5c7-485fc6fb500e.png">
+
+<img width="614" alt="image" src="https://user-images.githubusercontent.com/48286013/159828004-821758a5-3626-4446-b951-0527377c8c14.png">
