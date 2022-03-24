@@ -37,3 +37,13 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 <img width="630" alt="image" src="https://user-images.githubusercontent.com/48286013/159827943-7ee4480c-b090-42e6-a5c7-485fc6fb500e.png">
 
 <img width="614" alt="image" src="https://user-images.githubusercontent.com/48286013/159828004-821758a5-3626-4446-b951-0527377c8c14.png">
+
+
+>https://github.com/c0ny1/captcha-killer  [插件源项目]
+>
+>https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
+>
+>https://github.com/sml2h3/ddddocr [验证码识别项目]
+>
+>https://github.com/PoJun-Lab/blaster [验证码登录爆破]
+>
