@@ -7,6 +7,7 @@ package ui;
 import burp.BurpExtender;
 import com.alibaba.fastjson.JSON;
 import entity.*;
+import java.io.IOException;
 import matcher.impl.JsonMatcher;
 import matcher.impl.XmlMatcher;
 import ui.model.TableModel;
@@ -38,6 +39,10 @@ public class GUI {
     private JButton btnGetCaptcha;
     private JTextArea taRequest;
     private JLabel lbCaptcha;
+
+    private JLabel lbWords; // 关键字label
+    public JTextField tfWords; // 关键字textfield
+
     private JLabel lbImage;
     private JToggleButton tlbLock;
     private JTextArea taResponse;
@@ -75,6 +80,10 @@ public class GUI {
     //一些公共变量
     private byte[] byteImg;
     public static final List<CaptchaEntity> captcha = new ArrayList<CaptchaEntity>();
+
+    public JTextField getTfwords(){
+        return tfWords;
+    }
 
 
     public JTextField getTfURL(){
@@ -141,7 +150,7 @@ public class GUI {
 
         //图片获取面板
         lbURL = new JLabel("验证码URL:");
-        tfURL = new JTextField(30);
+        tfURL = new JTextField(25);
         btnGetCaptcha = new JButton("获取");
 
         taRequest = new JTextArea();
@@ -164,26 +173,40 @@ public class GUI {
         imgRigthPanel.setLayout(new GridBagLayout());
         lbImage = new JLabel("");
         lbCaptcha = new JLabel("验证码:");
+
+        lbWords = new JLabel("关键字:"); // todo 页面问题
+        tfWords = new JTextField(13);
+
         tlbLock = new JToggleButton("锁定");
         tlbLock.setToolTipText("当配置好所有选项后，请锁定防止配置被改动！");
 
         taResponse = new JTextArea();
         taResponse.setLineWrap(true);
         taResponse.setWrapStyleWord(true);//断行不断字
-        taResponse.setEditable(false);
+        taResponse.setEditable(true);
         JScrollPane spResponse = new JScrollPane(taResponse);
 
-        GBC gbc_lbcaptcha = new GBC(0,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,0);
-        GBC gbc_lbimage = new GBC(1,0,1,100).setFill(GBC.BOTH).setWeight(100,1).setInsets(3,3,0,0);
-        GBC gbc_tlblock = new GBC(2,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,3);
+        GBC gbc_lbcaptcha = new GBC(2,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,0);
+        GBC gbc_lbimage = new GBC(3,0,1,100).setFill(GBC.BOTH).setWeight(100,1).setInsets(3,3,0,0);
+        GBC gbc_lbwords = new GBC(0,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,1);
+        GBC gbc_tfwords = new GBC(1,0,1,1).setFill(GBC.HORIZONTAL).setWeight(70,1).setInsets(3,3,0,0);
+        //GBC gbc_tlblock = new GBC(4,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,3);
         GBC gbc_taresponse = new GBC(0,100,100,100).setFill(GBC.BOTH).setWeight(100,100).setInsets(3,3,3,3);
+
+
+
+
+        imgRigthPanel.add(lbWords,gbc_lbwords);
+        imgRigthPanel.add(tfWords,gbc_tfwords);
 
         imgRigthPanel.add(lbCaptcha,gbc_lbcaptcha);
         imgRigthPanel.add(lbImage,gbc_lbimage);
-        imgRigthPanel.add(tlbLock,gbc_tlblock);
+
+        //imgRigthPanel.add(tlbLock,gbc_tlblock);
         imgRigthPanel.add(spResponse,gbc_taresponse);
+
         spImg = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        spImg.setResizeWeight(0.5);
+        spImg.setResizeWeight(0);
         spImg.setLeftComponent(imgLeftPanel);
         spImg.setRightComponent(imgRigthPanel);
 
@@ -272,7 +295,7 @@ public class GUI {
         spOption.setTopComponent(spImg);
         spOption.setBottomComponent(spInterface);
         spAll = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        spAll.setResizeWeight(0.85);
+        spAll.setResizeWeight(0.6);
         spAll.setLeftComponent(spOption);
         spAll.setRightComponent(plResult);
 
@@ -757,18 +780,25 @@ public class GUI {
             tfURL.setText(service.toString());
 
             try {
+
                 byte[] byteRes = Util.requestImage(url,raw);
-                if(Util.isImage(byteRes)){
-                    byteImg =  byteRes;
-                }
-                else if(Util.isImage(new String(byteRes))){
-                    byteImg = dataimgToimg(new String(byteRes));
-                }
-                else{
-                    lbImage.setIcon(null);
-                    lbImage.setText("获取到的不是图片文件！");
-                    lbImage.setForeground(Color.RED);
-                    return;
+                String words = tfWords.getText().trim();
+                if(!words.equals("")){
+                    byteImg = dataimgToimg(new String(byteRes) ,words);
+                }else {
+                    System.out.println("6666");
+
+                    if (Util.isImage(byteRes)) {
+                        byteImg = byteRes;
+                    } else if (Util.isImage(new String(byteRes))) {
+                        byteImg = dataimgToimg(new String(byteRes));
+                    } else {
+                        lbImage.setIcon(null);
+                        System.out.println("this isn't image");
+                        lbImage.setText("获取到的不是图片文件或者未设置关键词！");
+                        lbImage.setForeground(Color.RED);
+                        return;
+                    }
                 }
 
                 ImageIcon icon = Util.byte2img(byteImg);
@@ -783,7 +813,7 @@ public class GUI {
     }
 
 
-    public static CaptchaEntity identifyCaptcha(String url,String raw,byte[] byteImg,int type,String pattern){
+    public static CaptchaEntity identifyCaptcha(String url,String raw,byte[] byteImg,int type,String pattern) throws IOException {
         CaptchaEntity cap = new CaptchaEntity();
         cap.setImage(byteImg);
         HttpClient http = new HttpClient(url, raw, byteImg);
@@ -827,7 +857,12 @@ public class GUI {
             HttpService service = new HttpService(url);
             tfInterfaceURL.setText(service.toString());
 
-            HttpClient http = new HttpClient(url,raw,byteImg);
+            HttpClient http = null;
+            try {
+                http = new HttpClient(url,raw,byteImg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             taInterfaceRawReq.setText(http.getRaw());
             byte[] rsp = http.doReust();
             String rspRaw = new String(rsp);
