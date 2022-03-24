@@ -23,19 +23,18 @@
  */
 package burp;
 
-import entity.CaptchaEntity;
+import java.awt.*;
+import java.io.PrintWriter;
+import javax.swing.*;
 import ui.GUI;
 import ui.Menu;
 import utils.Util;
-import javax.swing.*;
-import java.awt.*;
-import java.io.PrintWriter;
 
 public class BurpExtender implements IBurpExtender,ITab,IIntruderPayloadGeneratorFactory, IIntruderPayloadGenerator{
     public static IBurpExtenderCallbacks callbacks;
     public static IExtensionHelpers helpers;
     private String extensionName = "captcha-killer-modified";
-    private String version ="0.13";
+    private String version ="0.14";
     public static boolean isShowIntruderResult = true; // 识别结果是否显示Intruder模块结果
     public static PrintWriter stdout;
     public static PrintWriter stderr;
