@@ -8,8 +8,7 @@ import burp.BurpExtender;
 import burp.IHttpRequestResponse;
 import burp.IRequestInfo;
 import entity.HttpService;
-
-import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public class HttpClient {
     private String raw;
     private byte[] byteImg;
 
-    public HttpClient(String url,String raw,byte[] byteImg){
+    public HttpClient(String url,String raw,byte[] byteImg) throws IOException {
         this.url = url;
         this.raw = processLine(raw);
         this.byteImg = byteImg;
@@ -94,7 +93,7 @@ public class HttpClient {
     /**
      * 解析标签，可以参考下
      */
-    public void parseLabel(){
+    public void parseLabel() throws IOException {
         LableParser parser = new LableParser(byteImg);
 //        System.out.println("######################");
 //        System.out.println(raw);
@@ -199,6 +198,7 @@ public class HttpClient {
     public byte[] doReust(){
         byte[] req = raw.getBytes();
         try {
+            System.out.println(service);
             IHttpRequestResponse reqrsp = BurpExtender.callbacks.makeHttpRequest(service, req);
             byte[] response = reqrsp.getResponse();
             return response;
