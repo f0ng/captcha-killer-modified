@@ -3,7 +3,7 @@
 #### [releases](https://github.com/f0ng/captcha-killer-modified/releases/)下载最新插件与验证码识别端(`captcha-killer-modified.jar`、`codereg.py`)
 #### 使用Burp加载`captcha-killer-modified.jar`
 #### 再使用`python3 codereg.py`开启验证码识别模块，前提安装[ddddocr](https://github.com/sml2h3/ddddocr)
-#### <a id="preface">模板</a>
+#### <a id="Template">模板</a>
 ```
 POST /reg HTTP/1.1
 Host: 127.0.0.1:8888
@@ -28,6 +28,6 @@ Content-Length: 8332
 
 # 3.验证码识别错误
 
-#### 1.查看模板是否正确,<a href="#preface">模板</a>
+#### 1.查看模板是否正确,<a href="#Template">模板</a>
 #### 2.检查`python3 codereg.py`是否正常启动，可以本地尝试使用ddddocr进行识别验证码验证
 #### 3.重新下载本插件与验证码服识别端进行加载
