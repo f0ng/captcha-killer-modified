@@ -4,6 +4,7 @@
 
 ## https://github.com/c0ny1/captcha-killer
 
+[用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
 1.修改了原项目中`sun.misc.BASE64Encoder`报错的问题
 
