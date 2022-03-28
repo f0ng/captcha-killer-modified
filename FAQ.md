@@ -31,3 +31,15 @@ Content-Length: 8332
 #### 1.查看模板是否正确,<a href="#Template">模板</a>
 #### 2.检查`python3 codereg.py`是否正常启动，可以本地尝试使用ddddocr进行识别验证码验证
 #### 3.重新下载本插件与验证码服识别端进行加载
+
+# 4.报错 `Typeerror: classification() got an unexpected keyword argument img_base64`
+
+#### #4 感谢ekko-zhao师傅反馈
+#### 修改`codereg.py`源码如下
+```python
+async def handle c(request) :
+    img_base64 = await request.text ()
+    img_bytes = base64.b64decode (img_ base64)
+    return web. Response(text=ocr.classification(img_bytes))
+```
+
