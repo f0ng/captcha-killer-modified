@@ -48,3 +48,6 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 >
 >https://github.com/PoJun-Lab/blaster [验证码登录爆破]
 >
+
+
+![f](https://starchart.cc/f0ng/captcha-killer-modified.svg)
