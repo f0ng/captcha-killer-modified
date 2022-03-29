@@ -35,11 +35,11 @@ Content-Length: 8332
 # 4.报错 `Typeerror: classification() got an unexpected keyword argument img_base64`
 
 #### #4 感谢ekko-zhao师傅反馈
-#### 修改`codereg.py`源码如下
+#### 修改`codereg.py`源码如下（记得`import base64`）
 ```python
-async def handle c(request) :
-    img_base64 = await request.text ()
-    img_bytes = base64.b64decode (img_ base64)
+async def handle_cb(request) :
+    img_base64 = await request.text()
+    img_bytes = base64.b64decode(img_ base64)
     return web. Response(text=ocr.classification(img_bytes))
 ```
 
