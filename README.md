@@ -39,6 +39,10 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 <img width="614" alt="image" src="https://user-images.githubusercontent.com/48286013/159828004-821758a5-3626-4446-b951-0527377c8c14.png">
 
+【2022-3-30】适配`data:image\/png`与base64中出现`\r\n`情况
+
+<img width="627" alt="image" src="https://user-images.githubusercontent.com/48286013/160766851-c5b4a872-9be6-4afb-a547-1af843a1e101.png">
+
 
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
