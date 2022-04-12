@@ -43,6 +43,14 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 <img width="627" alt="image" src="https://user-images.githubusercontent.com/48286013/160766851-c5b4a872-9be6-4afb-a547-1af843a1e101.png">
 
+【2022-4-12】提升准确性，修改识别验证码端代码，主要修改如下：
+
+1. 增加basic认证，方便部署在公网，使用`tmux`在后台运行即可
+
+2. 对验证码识别部分进行修改，针对识别出来多位，可以进行自行删改，举例，如验证码是四位，但是ddddocr识别出来了五位，那么可以截取`text=ocr.classification(img_bytes)[0:4]`；
+   
+   如ddddocr对特定类验证码的识别中字母`O`与数字`0`识别混淆，可以进行替换`text=ocr.classification(img_bytes).replace("0","O")`
+
 
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
