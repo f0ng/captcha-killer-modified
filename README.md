@@ -47,7 +47,7 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 1. 增加basic认证，方便部署在公网，使用`tmux`在后台运行即可
 
-2. 对验证码识别部分进行修改，针对识别出来多位，可以进行自行删改，举例，如验证码是四位，但是ddddocr识别出来了五位，那么可以截取`text=ocr.classification(img_bytes)[0:4]`；
+2. 对验证码识别部分进行修改，针对识别出来多位，可以进行自行删改，举例，如验证码是四位，但是ddddocr识别出来了五位，那么可以截取`text=ocr.classification(img_bytes)[0:4]`前四位；
    
    如ddddocr对特定类验证码的识别中字母`O`与数字`0`识别混淆，可以进行替换`text=ocr.classification(img_bytes).replace("0","O")`
 
