@@ -35,7 +35,7 @@ Content-Length: 8332
 
 # 4.报错 `Typeerror: classification() got an unexpected keyword argument img_base64`
 
-#### #4 感谢ekko-zhao师傅反馈
+#### 4 感谢ekko-zhao师傅反馈
 #### 修改`codereg.py`源码如下（记得`import base64`）
 ```python
 async def handle_cb(request) :
@@ -44,3 +44,9 @@ async def handle_cb(request) :
     return web. Response(text=ocr.classification(img_bytes))
 ```
 
+
+# 5.无法识别验证码
+
+#### 一般问题出在新版burp上，由于jdk的原因导致代码运行错误，可以点击[此处](https://github.com/f0ng/captcha-killer-modified/raw/main/captcha-killer-modified-jdk14.jar)下载
+
+<img width="1234" alt="image" src="https://user-images.githubusercontent.com/48286013/171561756-2a74a18b-8ad0-47f8-a17a-309b98784046.png">
