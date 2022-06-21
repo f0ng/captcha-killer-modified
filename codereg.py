@@ -16,7 +16,7 @@ port = args.p
 auth_base64 = "f0ngauth" # 可自定义auth认证
 
 async def handle_cb(request):
-    if request.headers.get('Authorization') != 'Basic ' + auth_base64:
+    if request.headers.get('Authorization') != 'Basic ' + auth_base64:  # 可自定义auth认证，不需要注释就好
         return web.Response(text='Forbidden', status='403')
     print(await request.text())
     img_base64 = await request.text()
