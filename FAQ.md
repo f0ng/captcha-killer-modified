@@ -1,3 +1,4 @@
+# 有问题请在FAQ或者README寻找一下，如果没找到请提issue
 # 1.用法
 
 #### [releases](https://github.com/f0ng/captcha-killer-modified/releases/)下载最新插件与验证码识别端(`captcha-killer-modified.jar`、`codereg.py`)
