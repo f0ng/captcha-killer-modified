@@ -71,8 +71,10 @@ public class Util {
     }
 
     public static boolean isImage(String str_img) throws IOException {
-//        System.out.println(str_img);
+        System.out.println(str_img);
         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
+        str_img = str_img.replace("\\r\\n","").replace("\\","");
+        System.out.println(str_img);
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
@@ -86,6 +88,7 @@ public class Util {
         boolean isImg = false;
         InputStream buffin = new ByteArrayInputStream(img);
         BufferedImage image = ImageIO.read(buffin);
+        System.out.println(image);
         if(image == null){
             isImg = false;
         }else {
@@ -98,7 +101,7 @@ public class Util {
 
     public static byte[] dataimgToimg(String str_img) throws IOException {
         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
-
+        str_img = str_img.replace("\\r\\n","").replace("\\","");
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
@@ -107,13 +110,19 @@ public class Util {
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
+        System.out.println(str_img);
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         InputStream buffin = new ByteArrayInputStream(img);
         return img;
     }
 
     public static byte[] dataimgToimg(String str_img,String words) throws IOException {
+        BurpExtender.getCallbacks().printOutput(str_img);
+        str_img = str_img.replace("\\n","");
+
+        BurpExtender.getCallbacks().printOutput(str_img);
         String pattern = "(" + words + ".*?)[,&}/+=\\w]+";
+
 
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
@@ -123,8 +132,8 @@ public class Util {
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
-        //str_img = str_img;
-        System.out.println(str_img);
+
+
         System.out.println(str_img.indexOf(","));
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         //InputStream buffin = new ByteArrayInputStream(img);
