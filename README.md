@@ -6,13 +6,19 @@
 
 [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
-1.修改了原项目中`sun.misc.BASE64Encoder`报错的问题
+### 提issue之前请说明如下字段：
+1. burp版本
+2. 启动burp的jdk版本
+3. burp的Extender中Options配置的jdk版本
 
-2.优化了验证码`data:image`识别问题
+## 插件优化的地方
+1. 修改了原项目中`sun.misc.BASE64Encoder`报错的问题
 
-3.添加了ddddocr验证码识别库
+2. 优化了验证码`data:image`识别问题
 
-4.增加自定义关键词获取验证码
+3. 添加了ddddocr验证码识别库
+
+4. 增加自定义关键词获取验证码
 
 <img width="1439" alt="image" src="https://user-images.githubusercontent.com/48286013/159115886-7e482f8e-d36a-416a-8b67-c535e741d114.png">
 
