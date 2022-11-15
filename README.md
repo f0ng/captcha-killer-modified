@@ -6,6 +6,8 @@
 
 [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
+关注主页公众号（only security），回复`captcha-killer-modified`获取下载地址】
+
 ### 提issue之前请说明如下字段：
 1. burp版本
 2. 启动burp的jdk版本
