@@ -6,22 +6,24 @@ package utils;
 
 import burp.BurpExtender;
 import burp.IResponseInfo;
-// import sun.misc.BASE64Decoder;
-// import sun.misc.BASE64Encoder;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
-//import java.util.Base64.Decoder;
-//import java.util.Base64.Encoder;
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.xml.bind.DatatypeConverter;
+
+// import sun.misc.BASE64Decoder;
+// import sun.misc.BASE64Encoder;
+//import java.util.Base64.Decoder;
+//import java.util.Base64.Encoder;
 
 public class Util {
     /**
@@ -102,6 +104,7 @@ public class Util {
     public static byte[] dataimgToimg(String str_img) throws IOException {
         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
         str_img = str_img.replace("\\r\\n","").replace("\\","");
+        str_img = str_img.replace("\\n","");
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
@@ -112,17 +115,33 @@ public class Util {
         }
         System.out.println(str_img);
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
-        InputStream buffin = new ByteArrayInputStream(img);
+//        InputStream buffin = new ByteArrayInputStream(img);
         return img;
     }
 
-    public static byte[] dataimgToimg(String str_img,String words) throws IOException {
-        BurpExtender.getCallbacks().printOutput(str_img);
+    public static String extractToken(String str_img,String token) throws IOException {
+        String pattern =   token ;
+        str_img = str_img.replace("\\r\\n","").replace("\\","");
         str_img = str_img.replace("\\n","");
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(str_img);
 
-        BurpExtender.getCallbacks().printOutput(str_img);
+        if (m.find()) {
+            str_img = m.group(1).replace("\"", "").replace("&", "").replace("Base64:", "").replace("base64:", "");
+        }
+        if( str_img.length() > 150){
+            str_img = "提取关键字过长，请确认提取是否正确！";
+        }
+
+        return str_img;
+    }
+
+
+
+    public static byte[] dataimgToimg(String str_img,String words) throws IOException {
         String pattern = "(" + words + ".*?)[,&}/+=\\w]+";
-
+        str_img = str_img.replace("\\r\\n","").replace("\\","");
+        str_img = str_img.replace("\\n","");
 
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
@@ -132,8 +151,8 @@ public class Util {
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
-
-
+        //str_img = str_img;
+        System.out.println(str_img);
         System.out.println(str_img.indexOf(","));
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         //InputStream buffin = new ByteArrayInputStream(img);
@@ -362,15 +381,17 @@ public class Util {
         return count;
     }
 
-    public static byte[] requestImage(String url,String raw) throws IOException {
+
+    public static byte[][] requestImage(String url,String raw) throws IOException {
         if(Util.isURL(url)) {
             HttpClient http = new HttpClient(url, raw, null);
             byte[] rsp = http.doReust();
-            BurpExtender.gui.getTaResponse().setText(new String(rsp));
+//            BurpExtender.stdout.println(new String(rsp).replace("\r\n","\r\n\\r\\n"));
+            BurpExtender.gui.getTaResponse().setText(new String(rsp).replace("\r\n","\\r\\n\r\n"));
             int BodyOffset = BurpExtender.helpers.analyzeResponse(rsp).getBodyOffset();
             int body_length = rsp.length - BodyOffset;
             byte[] byteImg = Util.subBytes(rsp, BodyOffset, body_length);
-            return byteImg;
+            return new byte[][]{byteImg, rsp};
         }else{
             BurpExtender.stderr.println("[-] captcha URL format invalid");
             return null;
