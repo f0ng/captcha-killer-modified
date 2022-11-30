@@ -6,6 +6,8 @@ import utils.Util;
 
 import javax.swing.*;
 
+import static utils.Util.extractToken;
+
 public class GeneratePayloadSwingWorker extends SwingWorker {
     @Override
     protected Object doInBackground() throws Exception {
@@ -16,7 +18,17 @@ public class GeneratePayloadSwingWorker extends SwingWorker {
         CaptchaEntity cap = new CaptchaEntity();
         int count = 0;
         try {
-            byte[] byteImg = Util.requestImage(BurpExtender.gui.getCaptchaURL(),BurpExtender.gui.getCaptchaReqRaw());
+//            byte[] byteImg = Util.requestImage(BurpExtender.gui.getCaptchaURL(),BurpExtender.gui.getCaptchaReqRaw())[0];
+//            byte[] byteResp = Util.requestImage(BurpExtender.gui.getCaptchaURL(),BurpExtender.gui.getCaptchaReqRaw())[1];
+
+            byte[][] bytesResResp = Util.requestImage(BurpExtender.gui.getCaptchaURL(),BurpExtender.gui.getCaptchaReqRaw());
+            byte[] byteImg = bytesResResp[0]; // 只有响应包
+            byte[] byteResp = bytesResResp[1]; // 响应头+响应包
+
+            String token = BurpExtender.gui.tfToken.getText().trim();
+            if (!token.trim().equals("")){
+                BurpExtender.gui.tokenwords = extractToken(new String(byteResp) ,token);
+            }
             //遗留问题：burp自带的发包，无法指定超时。如果访问速度过快，这里可能为空。
             while (count < 3){
                 cap = GUI.identifyCaptcha(BurpExtender.gui.getInterfaceURL().getText(),BurpExtender.gui.getTaInterfaceTmplReq().getText(),byteImg,BurpExtender.gui.getCbmRuleType().getSelectedIndex(),BurpExtender.gui.getRegular().getText());
@@ -27,6 +39,7 @@ public class GeneratePayloadSwingWorker extends SwingWorker {
                     break;
                 }
             }
+
             if(BurpExtender.isShowIntruderResult) {
                 synchronized (BurpExtender.gui.captcha) {
                     int row = BurpExtender.gui.captcha.size();
