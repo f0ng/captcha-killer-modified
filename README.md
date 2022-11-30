@@ -6,6 +6,13 @@
 
 [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
+交流群
+
+<img width="389" alt="image" src="https://user-images.githubusercontent.com/48286013/204838629-e289f0fe-3bd8-4393-82ef-a2a19d7b7f4c.png">
+
+
+二维码失效请加微信`f-f0ng`、备注captchakillermodified交流
+
 关注主页公众号（only security），回复`captchakillermodified`获取下载地址】
 
 ### 提issue之前请说明如下字段：
