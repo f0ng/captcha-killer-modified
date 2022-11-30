@@ -59,6 +59,9 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
    
    如ddddocr对特定类验证码的识别中字母`O`与数字`0`识别混淆，可以进行替换`text=ocr.classification(img_bytes).replace("0","O")`
 
+【2022-7-2】
+
+- 优化验证码对于base64的识别#10 ，原因在于base64编码中存在`\n`，`0.16`版本增加对`\n`的处理，感谢@DreamAndSun 师傅反馈
 
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
