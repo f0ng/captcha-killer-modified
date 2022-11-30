@@ -23,18 +23,21 @@
  */
 package burp;
 
-import java.awt.*;
-import java.io.PrintWriter;
-import javax.swing.*;
 import ui.GUI;
 import ui.Menu;
 import utils.Util;
 
-public class BurpExtender implements IBurpExtender,ITab,IIntruderPayloadGeneratorFactory, IIntruderPayloadGenerator{
+import javax.swing.*;
+import java.awt.*;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+
+public class BurpExtender implements IBurpExtender,ITab,IIntruderPayloadGeneratorFactory, IIntruderPayloadGenerator,IHttpListener{
     public static IBurpExtenderCallbacks callbacks;
     public static IExtensionHelpers helpers;
     private String extensionName = "captcha-killer-modified";
-    private String version ="0.14";
+    private String version ="0.17";
     public static boolean isShowIntruderResult = true; // 识别结果是否显示Intruder模块结果
     public static PrintWriter stdout;
     public static PrintWriter stderr;
@@ -50,6 +53,7 @@ public class BurpExtender implements IBurpExtender,ITab,IIntruderPayloadGenerato
         callbacks.setExtensionName(String.format("%s %s",extensionName,version));
         calllbacks.registerContextMenuFactory(new Menu());
         calllbacks.registerIntruderPayloadGeneratorFactory(this);
+        callbacks.registerHttpListener(BurpExtender.this); // 注册 HttpListener 接口
 
         stdout = new PrintWriter(callbacks.getStdout(),true);
         stderr = new PrintWriter(callbacks.getStderr(),true);
@@ -61,9 +65,35 @@ public class BurpExtender implements IBurpExtender,ITab,IIntruderPayloadGenerato
         });
         stdout.println(Util.getBanner(extensionName,version));
 
+
     }
 
+    @Override
+    public void processHttpMessage(int toolFlag, boolean messageIsRequest, IHttpRequestResponse messageInfo)
+    {
+        if (toolFlag == IBurpExtenderCallbacks.TOOL_PROXY || toolFlag == IBurpExtenderCallbacks.TOOL_INTRUDER || toolFlag == IBurpExtenderCallbacks.TOOL_REPEATER){
+            if (messageIsRequest) {
+                byte[] request = messageInfo.getRequest();
+                IRequestInfo iRequestInfo = helpers.analyzeRequest(messageInfo);
+                // 获取请求中的所有参数
+                List<String> headersList = iRequestInfo.getHeaders();
+                int bodyOffset = iRequestInfo.getBodyOffset();
+                byte[] body = Arrays.copyOfRange(request, bodyOffset, request.length);
+                int i = 0;
+                BurpExtender.stdout.println("81");
+                for (String singleheader : headersList) {
+                    headersList.set(i ,singleheader.replace("@captcha-killer-modified@",gui.tokenwords));
+                    i++;
+//                    BurpExtender.stdout.println(headersList.get(i-1));
+                }
 
+                byte[] httpmsgresp = helpers.buildHttpMessage(headersList, (new String(body).replace("@captcha-killer-modified@",gui.tokenwords).getBytes()));
+                messageInfo.setRequest(httpmsgresp);
+
+            }
+        }
+
+    }
 
     @Override
     public String getTabCaption() {
@@ -115,6 +145,7 @@ public class BurpExtender implements IBurpExtender,ITab,IIntruderPayloadGenerato
         gpsw.execute();
         try {
             Object result = gpsw.get();
+//            BurpExtender.stdout.println(new String((byte[])result));
             return (byte[])result;
         }catch (Exception e){
             e.printStackTrace();
