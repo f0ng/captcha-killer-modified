@@ -63,6 +63,13 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 1. 优化验证码对于base64的识别#10 ，原因在于base64编码中存在`\n`，`0.16`版本增加对`\n`的处理，感谢@DreamAndSun 师傅反馈
 
+【2022-11-30】 0.17
+
+1. 添加响应提取，针对获取验证码请求中有类似token字段，在登录包的同时需要token校验的情况，在需要token校验的字段使用`@captcha-killer-modified@`
+<img width="650" alt="image" src="https://user-images.githubusercontent.com/48286013/204822669-7ea6022e-8028-4526-a653-03488a196d48.png">
+
+2. 增加对验证码进行二次处理的案例(验证码为gif图，且验证码具体是在gif图的第二帧，无法直接识别)，见[用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
+
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
 >https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
