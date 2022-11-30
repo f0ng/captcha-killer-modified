@@ -7,24 +7,28 @@ package ui;
 import burp.BurpExtender;
 import com.alibaba.fastjson.JSON;
 import entity.*;
-import java.io.IOException;
 import matcher.impl.JsonMatcher;
 import matcher.impl.XmlMatcher;
 import ui.model.TableModel;
 import utils.HttpClient;
 import utils.RuleMannager;
 import utils.Util;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import static utils.Util.dataimgToimg;
+import static utils.Util.extractToken;
 
 public class GUI {
     private JPanel MainPanel;
@@ -42,6 +46,14 @@ public class GUI {
 
     private JLabel lbWords; // 关键字label
     public JTextField tfWords; // 关键字textfield
+
+    private JLabel lbToken; // token关键字
+    public JTextField tfToken; // token关键字
+
+    private JLabel lbTokenex; // token关键字显示
+    public JLabel tfTokenex; // token关键字显示
+
+    public String tokenwords ; //token 关键字提取的结果
 
     private JLabel lbImage;
     private JToggleButton tlbLock;
@@ -144,13 +156,14 @@ public class GUI {
     }
 
     public void initGUI(){
+        String tokenwords = "";
         MainPanel = new JPanel();
         MainPanel.setBorder(new EmptyBorder(2, 2, 2, 2));
         MainPanel.setLayout(new BorderLayout(0, 0));
 
         //图片获取面板
         lbURL = new JLabel("验证码URL:");
-        tfURL = new JTextField(25);
+        tfURL = new JTextField(20);
         btnGetCaptcha = new JButton("获取");
 
         taRequest = new JTextArea();
@@ -161,7 +174,7 @@ public class GUI {
         JPanel imgLeftPanel = new JPanel();
         imgLeftPanel.setLayout(new GridBagLayout());
         GBC gbc_lburl = new GBC(0,0,1,1).setFill(GBC.HORIZONTAL).setInsets(3,3,0,0);
-        GBC gbc_tfurl = new GBC(1,0,1,1).setFill(GBC.HORIZONTAL).setWeight(100,1).setInsets(3,3,0,0);
+        GBC gbc_tfurl = new GBC(1,0,1,1).setFill(GBC.BOTH).setWeight(100,1).setInsets(3,3,0,0);
         GBC gbc_btngetcaptcha = new GBC(2,0,11,1).setInsets(3,3,0,3);
         GBC gbc_tarequst = new GBC(0,1,100,100).setFill(GBC.BOTH).setWeight(100,100).setInsets(3,3,3,3);
         imgLeftPanel.add(lbURL,gbc_lburl);
@@ -170,15 +183,26 @@ public class GUI {
         imgLeftPanel.add(spRequest,gbc_tarequst);
 
         JPanel imgRigthPanel = new JPanel();
+//        GridBagLayout gbc = new GridBagLayout();
+//        gbc.anchor = GridBagConstraints.EAST;
+
         imgRigthPanel.setLayout(new GridBagLayout());
+
         lbImage = new JLabel("");
         lbCaptcha = new JLabel("验证码:");
 
-        lbWords = new JLabel("关键字:"); // todo 页面问题
-        tfWords = new JTextField(13);
+        lbWords = new JLabel("关键字:");
+        tfWords = new JTextField(10);
 
-        tlbLock = new JToggleButton("锁定");
-        tlbLock.setToolTipText("当配置好所有选项后，请锁定防止配置被改动！");
+        lbToken = new JLabel("响应提取(regex):");
+        tfToken = new JTextField(10);
+        GUI.this.tokenwords = tokenwords;
+
+        lbTokenex = new JLabel("提取的关键字:");
+        tfTokenex = new JLabel("");
+
+//        tlbLock = new JToggleButton("锁定");
+//        tlbLock.setToolTipText("当配置好所有选项后，请锁定防止配置被改动！");
 
         taResponse = new JTextArea();
         taResponse.setLineWrap(true);
@@ -187,13 +211,17 @@ public class GUI {
         JScrollPane spResponse = new JScrollPane(taResponse);
 
         GBC gbc_lbcaptcha = new GBC(2,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,0);
-        GBC gbc_lbimage = new GBC(3,0,1,100).setFill(GBC.BOTH).setWeight(100,1).setInsets(3,3,0,0);
+        GBC gbc_lbimage = new GBC(3,0,1,1).setFill(GBC.BOTH).setWeight(1,1).setInsets(3,3,0,0);
         GBC gbc_lbwords = new GBC(0,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,1);
-        GBC gbc_tfwords = new GBC(1,0,1,1).setFill(GBC.HORIZONTAL).setWeight(70,1).setInsets(3,3,0,0);
+        GBC gbc_tfwords = new GBC(1,0,1,1).setFill(GBC.HORIZONTAL).setWeight(20,1).setInsets(3,3,0,0);
+
+        GBC gbc_lbtoken = new GBC(0,1,1,1).setFill(GBC.NONE).setInsets(3,3,0,1);
+        GBC gbc_tftoken = new GBC(1,1,1,1).setFill(GBC.BOTH).setWeight(20,1).setInsets(3,3,0,0);
+        GBC gbc_lbtokenex = new GBC(2,1,1,1).setFill(GBC.BOTH).setInsets(3,3,0,1);
+        GBC gbc_tftokenex = new GBC(3,1,1,1).setFill(GBC.NONE).setWeight(20,1).setInsets(3,3,0,0);
+
         //GBC gbc_tlblock = new GBC(4,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,3);
-        GBC gbc_taresponse = new GBC(0,100,100,100).setFill(GBC.BOTH).setWeight(100,100).setInsets(3,3,3,3);
-
-
+        GBC gbc_taresponse = new GBC(0,2,100,100).setFill(GBC.BOTH).setWeight(100,100).setInsets(3,3,3,3);
 
 
         imgRigthPanel.add(lbWords,gbc_lbwords);
@@ -201,6 +229,14 @@ public class GUI {
 
         imgRigthPanel.add(lbCaptcha,gbc_lbcaptcha);
         imgRigthPanel.add(lbImage,gbc_lbimage);
+
+        imgRigthPanel.add(lbToken,gbc_lbtoken);
+        imgRigthPanel.add(tfToken,gbc_tftoken);
+
+        imgRigthPanel.add(lbTokenex,gbc_lbtokenex);
+        imgRigthPanel.add(tfTokenex,gbc_tftokenex);
+
+
 
         //imgRigthPanel.add(tlbLock,gbc_tlblock);
         imgRigthPanel.add(spResponse,gbc_taresponse);
@@ -335,41 +371,41 @@ public class GUI {
         });
 
         //锁定
-        tlbLock.addChangeListener(new ChangeListener(){
-            public void stateChanged(ChangeEvent e) {
-                boolean isSelected = tlbLock.isSelected();
-                if(isSelected){
-                    tlbLock.setText("解锁");
-                    tfURL.setEnabled(false);
-                    taRequest.setEnabled(false);
-                    btnGetCaptcha.setEnabled(false);
-                    taResponse.setEnabled(false);
-                    tfInterfaceURL.setEnabled(false);
-                    btnIdentify.setEnabled(false);
-                    taInterfaceTmplReq.setEnabled(false);
-                    cbmRuleType.setEnabled(false);
-                    taInterfaceRawReq.setEnabled(false);
-                    tfRegular.setEnabled(false);
-                    btnSaveTmpl.setEnabled(false);
-                    InterfaceRsq.setEnabled(false);
-                }else{
-                    tlbLock.setText("锁定");
-                    tfURL.setEnabled(true);
-                    taRequest.setEnabled(true);
-                    btnGetCaptcha.setEnabled(true);
-                    taResponse.setEnabled(true);
-                    tfInterfaceURL.setEnabled(true);
-                    btnIdentify.setEnabled(true);
-                    taInterfaceTmplReq.setEnabled(true);
-                    cbmRuleType.setEnabled(true);
-                    taInterfaceRawReq.setEnabled(true);
-                    tfRegular.setEnabled(true);
-                    btnSaveTmpl.setEnabled(true);
-                    InterfaceRsq.setEnabled(true);
-                }
-                tlbLock.setSelected(isSelected);
-            }
-        });
+//        tlbLock.addChangeListener(new ChangeListener(){
+//            public void stateChanged(ChangeEvent e) {
+//                boolean isSelected = tlbLock.isSelected();
+//                if(isSelected){
+//                    tlbLock.setText("解锁");
+//                    tfURL.setEnabled(false);
+//                    taRequest.setEnabled(false);
+//                    btnGetCaptcha.setEnabled(false);
+//                    taResponse.setEnabled(false);
+//                    tfInterfaceURL.setEnabled(false);
+//                    btnIdentify.setEnabled(false);
+//                    taInterfaceTmplReq.setEnabled(false);
+//                    cbmRuleType.setEnabled(false);
+//                    taInterfaceRawReq.setEnabled(false);
+//                    tfRegular.setEnabled(false);
+//                    btnSaveTmpl.setEnabled(false);
+//                    InterfaceRsq.setEnabled(false);
+//                }else{
+//                    tlbLock.setText("锁定");
+//                    tfURL.setEnabled(true);
+//                    taRequest.setEnabled(true);
+//                    btnGetCaptcha.setEnabled(true);
+//                    taResponse.setEnabled(true);
+//                    tfInterfaceURL.setEnabled(true);
+//                    btnIdentify.setEnabled(true);
+//                    taInterfaceTmplReq.setEnabled(true);
+//                    cbmRuleType.setEnabled(true);
+//                    taInterfaceRawReq.setEnabled(true);
+//                    tfRegular.setEnabled(true);
+//                    btnSaveTmpl.setEnabled(true);
+//                    InterfaceRsq.setEnabled(true);
+//                }
+////                tlbLock.setSelected(isSelected);
+//            }
+//        });
 
         //识别
         btnIdentify.addActionListener(new ActionListener() {
@@ -780,19 +816,33 @@ public class GUI {
             tfURL.setText(service.toString());
 
             try {
+                byte[][] bytesResResp = Util.requestImage(url,raw);
 
-                byte[] byteRes = Util.requestImage(url,raw);
+                byte[] byteRes = bytesResResp[0]; // 只有响应包
+                byte[] byteResp = bytesResResp[1]; // 响应头+响应包
                 String words = tfWords.getText().trim();
-                if(!words.equals("")){
+                String token = tfToken.getText().trim();
+
+                if (!token.trim().equals("")){
+                    tokenwords = extractToken(new String(byteResp) ,token);
+                    tfTokenex.setText(tokenwords);
+                }
+                BurpExtender.stdout.println(tokenwords);
+
+                if(!words.trim().equals("")){
                     byteImg = dataimgToimg(new String(byteRes) ,words);
                 }else {
-                    System.out.println("6666");
+//                    System.out.println("6666");
+                    //System.out.println(new String(byteRes));
 
                     if (Util.isImage(byteRes)) {
+//                        System.out.println("55555");
                         byteImg = byteRes;
                     } else if (Util.isImage(new String(byteRes))) {
+//                        System.out.println("7777");
                         byteImg = dataimgToimg(new String(byteRes));
                     } else {
+//                        System.out.println("8888");
                         lbImage.setIcon(null);
                         System.out.println("this isn't image");
                         lbImage.setText("获取到的不是图片文件或者未设置关键词！");
