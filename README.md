@@ -4,7 +4,7 @@
 
 ## https://github.com/c0ny1/captcha-killer
 
-[用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
+# [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
 交流群
 
