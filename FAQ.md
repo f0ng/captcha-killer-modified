@@ -147,3 +147,8 @@ if __name__ == '__main__':
 在logger或者logger++中可以看到实际的请求
 
 <img width="638" alt="image" src="https://user-images.githubusercontent.com/48286013/204827499-35424d0e-7070-4905-ac4f-46f05a15d49e.png">
+
+
+# 9-forbideen响应、403响应解决
+
+由于后续脚本增加了Basic认证，可以自行添加Basic认证头即可
