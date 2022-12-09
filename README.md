@@ -77,6 +77,12 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 2. 增加对验证码进行二次处理的案例(验证码为gif图，且验证码具体是在gif图的第二帧，无法直接识别)，见[用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
+【2022-12-9】 0.18
+1. 添加`@captcha@`参数替代验证码，方便在repeater参数内进行测试
+
+<img width="804" alt="image" src="https://user-images.githubusercontent.com/48286013/206609271-5cc8bdcf-2141-4616-9a60-7ab9493f18c2.png">
+
+
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
 >https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
