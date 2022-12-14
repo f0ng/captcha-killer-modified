@@ -52,9 +52,11 @@ async def handle_cb(request) :
 
 # 5-无法识别验证码
 
-#### 一般问题出在新版burp上，由于jdk的原因导致代码运行错误，可以下载相应jdk版本的插件
+#### 1. 一般问题出在新版burp上，由于jdk的原因导致代码运行错误，可以下载相应jdk版本的插件
 
 <img width="1234" alt="image" src="https://user-images.githubusercontent.com/48286013/171561756-2a74a18b-8ad0-47f8-a17a-309b98784046.png">
+
+#### 2. 点击识别无响应，可以将服务识别端`codereg.py`放置在VPS上，使用公网地址访问即可
 
 # 6-验证码进行二次处理的案例(验证码为gif图,且验证码具体是在gif图的第二帧,无法直接识别)
 
