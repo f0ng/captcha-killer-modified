@@ -16,9 +16,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static burp.BurpExtender.stdout;
 
 // import sun.misc.BASE64Decoder;
 // import sun.misc.BASE64Encoder;
@@ -41,8 +44,10 @@ public class Util {
                         + "[*] ###################################################\n"
                         + "[*]  modifier: f0ng\n"
                         + "[*]  github: http://github.com/f0ng/captcha-killer-modified\n"
-                        + "[!] Install " + extName + " successful!\n"
-                        + "[*] Please enjoy it ^_^\n"
+                        + "[!]  Install " + extName + " successful!\n"
+                        + "[*]  Please enjoy it ^_^\n"
+                        + "[*]  use `@captcha@` replace captcha\n"
+                        + "[*]  use `@captcha-killer-modified@` replace captcha's token\n"
                         + "[*] ";
         return bannerInfo;
     }
@@ -73,24 +78,25 @@ public class Util {
     }
 
     public static boolean isImage(String str_img) throws IOException {
-        System.out.println(str_img);
+//        System.out.println(str_img);
         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
         str_img = str_img.replace("\\r\\n","").replace("\\","");
-        System.out.println(str_img);
+//        System.out.println(str_img);
+        str_img = URLDecoder.decode(str_img,"utf-8");
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
-            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
+            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","").replace(".","") ;
         }
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
-
+        stdout.println(str_img);
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         boolean isImg = false;
         InputStream buffin = new ByteArrayInputStream(img);
         BufferedImage image = ImageIO.read(buffin);
-        System.out.println(image);
+//        System.out.println(image);
         if(image == null){
             isImg = false;
         }else {
@@ -105,10 +111,11 @@ public class Util {
         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
         str_img = str_img.replace("\\r\\n","").replace("\\","");
         str_img = str_img.replace("\\n","");
+        str_img = URLDecoder.decode(str_img,"utf-8");
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         if (m.find( )) {
-            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","") ;
+            str_img = m.group(0).replace("\"","").replace("&","").replace("Base64:","").replace("base64:","").replace(".","") ;
         }
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
@@ -145,15 +152,19 @@ public class Util {
 
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
+        str_img = URLDecoder.decode(str_img,"utf-8");
         if (m.find( )) {
+            stdout.println(m.group(0));
             str_img = m.group(0).replace("\"","").replace(words,"").replace(":","").replace("&","").replace(",","") ;
         }
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
+
+            stdout.println(str_img);
         //str_img = str_img;
-        System.out.println(str_img);
-        System.out.println(str_img.indexOf(","));
+//        System.out.println(str_img);
+//        System.out.println(str_img.indexOf(","));
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         //InputStream buffin = new ByteArrayInputStream(img);
         return img;
@@ -228,7 +239,7 @@ public class Util {
         try {
             result = java.net.URLEncoder.encode(str, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            BurpExtender.stdout.println(e.getMessage());
+            stdout.println(e.getMessage());
         }
         return result;
     }
@@ -241,7 +252,7 @@ public class Util {
         try {
             result = java.net.URLDecoder.decode(str, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            BurpExtender.stdout.println(e.getMessage());
+            stdout.println(e.getMessage());
         }
         return result;
     }
