@@ -39,9 +39,9 @@ public class GUI {
 
     //获取验证码面板
     private JLabel lbURL;
-    private JTextField tfURL;
+    public JTextField tfURL;
     private JButton btnGetCaptcha;
-    private JTextArea taRequest;
+    public JTextArea taRequest;
     private JLabel lbCaptcha;
 
     private JLabel lbWords; // 关键字label
@@ -63,10 +63,10 @@ public class GUI {
     private JPanel plInterfaceReq;
     private JPopupMenu pmInterfaceMenu;
     private JTabbedPane tpInterfaceReq;
-    private JTextArea taInterfaceTmplReq;
+    public JTextArea taInterfaceTmplReq;
     private JTextArea taInterfaceRawReq;
     private JLabel lbInterfaceURL;
-    private JTextField tfInterfaceURL;
+    public JTextField tfInterfaceURL;
     private JButton btnIdentify;
     private JTabbedPane tpInterfaceRsq;
     private JPanel plInterfaceRsq;
@@ -90,7 +90,7 @@ public class GUI {
     private JMenuItem miShowIntruderResult = new JMenuItem("关闭Intruder识别结果显示");
 
     //一些公共变量
-    private byte[] byteImg;
+    public byte[] byteImg;
     public static final List<CaptchaEntity> captcha = new ArrayList<CaptchaEntity>();
 
     public JTextField getTfwords(){
@@ -360,10 +360,10 @@ public class GUI {
                     return;
                 }
 
-                if(!Util.isURL(tfURL.getText())){
-                    JOptionPane.showMessageDialog(null,"验证码URL不合法！","captcha-killer提示",JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
+//                if(!Util.isURL(tfURL.getText())){
+//                    JOptionPane.showMessageDialog(null,"验证码URL不合法！","captcha-killer提示",JOptionPane.WARNING_MESSAGE);
+//                    return;
+//                }
 
                 GetCaptchaThread thread = new GetCaptchaThread(tfURL.getText(),taRequest.getText());
                 thread.start();
@@ -800,7 +800,7 @@ public class GUI {
     }
 
 
-    public class GetCaptchaThread extends Thread {
+    public static class GetCaptchaThread extends Thread {
         private String url;
         private String raw;
 
@@ -810,50 +810,51 @@ public class GUI {
         }
 
         public void run() {
-            btnGetCaptcha.setEnabled(false);
+            BurpExtender.gui.btnGetCaptcha.setEnabled(false);
             //清洗验证码URL
             HttpService service = new HttpService(url);
-            tfURL.setText(service.toString());
+            BurpExtender.gui.tfURL.setText(service.toString());
 
             try {
                 byte[][] bytesResResp = Util.requestImage(url,raw);
-
+//                BurpExtender.stdout.println("820");
                 byte[] byteRes = bytesResResp[0]; // 只有响应包
                 byte[] byteResp = bytesResResp[1]; // 响应头+响应包
-                String words = tfWords.getText().trim();
-                String token = tfToken.getText().trim();
+                String words = BurpExtender.gui.tfWords.getText().trim();
+                String token = BurpExtender.gui.tfToken.getText().trim();
+//                BurpExtender.stdout.println("825");
 
                 if (!token.trim().equals("")){
-                    tokenwords = extractToken(new String(byteResp) ,token);
-                    tfTokenex.setText(tokenwords);
+                    BurpExtender.gui.tokenwords = extractToken(new String(byteResp) ,token);
+                    BurpExtender.gui.tfTokenex.setText(BurpExtender.gui.tokenwords);
                 }
-                BurpExtender.stdout.println(tokenwords);
+                BurpExtender.stdout.println(BurpExtender.gui.tokenwords);
 
                 if(!words.trim().equals("")){
-                    byteImg = dataimgToimg(new String(byteRes) ,words);
+                    BurpExtender.gui.byteImg = dataimgToimg(new String(byteRes) ,words);
                 }else {
 //                    System.out.println("6666");
                     //System.out.println(new String(byteRes));
 
                     if (Util.isImage(byteRes)) {
 //                        System.out.println("55555");
-                        byteImg = byteRes;
+                        BurpExtender.gui.byteImg = byteRes;
                     } else if (Util.isImage(new String(byteRes))) {
 //                        System.out.println("7777");
-                        byteImg = dataimgToimg(new String(byteRes));
+                        BurpExtender.gui.byteImg = dataimgToimg(new String(byteRes));
                     } else {
 //                        System.out.println("8888");
-                        lbImage.setIcon(null);
-                        System.out.println("this isn't image");
-                        lbImage.setText("获取到的不是图片文件或者未设置关键词！");
-                        lbImage.setForeground(Color.RED);
+                        BurpExtender.gui.lbImage.setIcon(null);
+//                        System.out.println("this isn't image");
+                        BurpExtender.gui.lbImage.setText("获取到的不是图片文件或者未设置关键词！");
+                        BurpExtender.gui.lbImage.setForeground(Color.RED);
                         return;
                     }
                 }
 
-                ImageIcon icon = Util.byte2img(byteImg);
-                lbImage.setIcon(icon);
-                lbImage.setText("");
+                ImageIcon icon = Util.byte2img(BurpExtender.gui.byteImg);
+                BurpExtender.gui.lbImage.setIcon(icon);
+                BurpExtender.gui.lbImage.setText("");
             } catch (Exception e) {
                 BurpExtender.stderr.println(e.getMessage());
             }finally {
@@ -864,6 +865,27 @@ public class GUI {
 
 
     public static CaptchaEntity identifyCaptcha(String url,String raw,byte[] byteImg,int type,String pattern) throws IOException {
+        CaptchaEntity cap = new CaptchaEntity();
+//        BurpExtender.stdout.println(new String(byteImg));
+//        byteImg = new String(byteImg).replace("data:image/png;base64,","").getBytes();
+        cap.setImage(byteImg);
+        HttpClient http = new HttpClient(url, raw, byteImg);
+        cap.setReqRaw(http.getRaw().getBytes());
+        byte[] rsp = http.doReust();
+        cap.setRsqRaw(rsp);
+        String rspRaw = new String(rsp);
+
+        Rule rule = new Rule(type,pattern);
+        MatchResult result = RuleMannager.match(rspRaw, rule);
+        cap.setResult(result.getResult());
+        //排查请求速度过快可能会导致
+        BurpExtender.stdout.println("---------------------------------------------");
+        BurpExtender.stdout.println(rspRaw);
+        BurpExtender.stdout.println("[+] res = " + result.getResult());
+        return cap;
+    }
+
+    public static String identifyCaptchas(String url,String raw,byte[] byteImg,int type,String pattern) throws IOException {
         CaptchaEntity cap = new CaptchaEntity();
         cap.setImage(byteImg);
         HttpClient http = new HttpClient(url, raw, byteImg);
@@ -879,10 +901,10 @@ public class GUI {
         BurpExtender.stdout.println("---------------------------------------------");
         BurpExtender.stdout.println(rspRaw);
         BurpExtender.stdout.println("[+] res = " + result.getResult());
-        return cap;
+        return result.getResult();
     }
 
-    public class IdentifyCaptchaThread extends Thread{
+    public  class IdentifyCaptchaThread extends Thread{
         private String url;
         private String raw;
         private byte[] img;

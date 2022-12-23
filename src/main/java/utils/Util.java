@@ -91,7 +91,8 @@ public class Util {
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
-        stdout.println(str_img);
+//        stdout.println(str_img);
+        str_img = str_img.replace(" ","+");
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
         boolean isImg = false;
         InputStream buffin = new ByteArrayInputStream(img);
@@ -120,7 +121,7 @@ public class Util {
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
-        System.out.println(str_img);
+        str_img = str_img.replace(" ","+");
         byte[] img = DatatypeConverter.parseBase64Binary(str_img.substring(str_img.indexOf(",") + 1));
 //        InputStream buffin = new ByteArrayInputStream(img);
         return img;
@@ -160,8 +161,8 @@ public class Util {
         if (!str_img.contains("data:image")){
             str_img = "data:image/jpeg;base64," + str_img;
         }
-
-            stdout.println(str_img);
+        str_img = str_img.replace(" ","+");
+//            stdout.println(str_img);
         //str_img = str_img;
 //        System.out.println(str_img);
 //        System.out.println(str_img.indexOf(","));
@@ -394,19 +395,20 @@ public class Util {
 
 
     public static byte[][] requestImage(String url,String raw) throws IOException {
-        if(Util.isURL(url)) {
+//        if(Util.isURL(url)) {
             HttpClient http = new HttpClient(url, raw, null);
             byte[] rsp = http.doReust();
+
 //            BurpExtender.stdout.println(new String(rsp).replace("\r\n","\r\n\\r\\n"));
             BurpExtender.gui.getTaResponse().setText(new String(rsp).replace("\r\n","\\r\\n\r\n"));
             int BodyOffset = BurpExtender.helpers.analyzeResponse(rsp).getBodyOffset();
             int body_length = rsp.length - BodyOffset;
             byte[] byteImg = Util.subBytes(rsp, BodyOffset, body_length);
             return new byte[][]{byteImg, rsp};
-        }else{
-            BurpExtender.stderr.println("[-] captcha URL format invalid");
-            return null;
-        }
+//        }else{
+//            BurpExtender.stderr.println("[-] captcha URL format invalid");
+//            return null;
+//        }
     }
 
     public static String matchByRegular(String str,String reg){

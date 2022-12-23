@@ -103,12 +103,15 @@ public class HttpClient {
     }
 
     private void parserRequest(){
-        if(Util.isURL(this.url)){
+//        if(Util.isURL(this.url)){
             service = new HttpService(this.url);
+
             try {
                 IRequestInfo requestInfo = BurpExtender.helpers.analyzeRequest(service, this.raw.getBytes());
                 requestInfo.getBodyOffset();
+
                 this.method = requestInfo.getMethod();
+
                 for (String header : requestInfo.getHeaders()) {
                     if (header.indexOf(this.method) >= 0 && header.indexOf("HTTP/") >= 0) {
                         this.path = header.split(" ")[1];
@@ -130,9 +133,9 @@ public class HttpClient {
 //                    System.out.println("neww" + data);
                 }
             }catch (Exception e){
-                BurpExtender.stderr.println(e.getMessage());
+//                BurpExtender.stderr.println(e.getMessage());
             }
-        }
+//        }
     }
 
     private void parserRequestOld(){
@@ -175,7 +178,7 @@ public class HttpClient {
          * 在处理GET数据包时,要注意包结果严格来讲最后要有两个\r\n。有的web服务器对数据包要求比较严格，可能会导致请求识别。
          * 该问题曾出现在请求某网站的验证码时，返回了403状态。
          */
-//        System.out.println(method);
+        System.out.println(method);
 //        System.out.println(data);
         if(method.equals("POST")) {
             int length = data.length();
@@ -198,7 +201,7 @@ public class HttpClient {
     public byte[] doReust(){
         byte[] req = raw.getBytes();
         try {
-            System.out.println(service);
+//            System.out.println(service);
             IHttpRequestResponse reqrsp = BurpExtender.callbacks.makeHttpRequest(service, req);
             byte[] response = reqrsp.getResponse();
             return response;

@@ -23,12 +23,15 @@ public class GeneratePayloadSwingWorker extends SwingWorker {
 
             byte[][] bytesResResp = Util.requestImage(BurpExtender.gui.getCaptchaURL(),BurpExtender.gui.getCaptchaReqRaw());
             byte[] byteImg = bytesResResp[0]; // 只有响应包
+            BurpExtender.stdout.println("*****");
+//            BurpExtender.stdout.println(new String(byteImg));
             byte[] byteResp = bytesResResp[1]; // 响应头+响应包
-
+//            byteImg = new String(byteImg).replace("data:image/png;base64,","").getBytes();
             String token = BurpExtender.gui.tfToken.getText().trim();
             if (!token.trim().equals("")){
                 BurpExtender.gui.tokenwords = extractToken(new String(byteResp) ,token);
             }
+
             //遗留问题：burp自带的发包，无法指定超时。如果访问速度过快，这里可能为空。
             while (count < 3){
                 cap = GUI.identifyCaptcha(BurpExtender.gui.getInterfaceURL().getText(),BurpExtender.gui.getTaInterfaceTmplReq().getText(),byteImg,BurpExtender.gui.getCbmRuleType().getSelectedIndex(),BurpExtender.gui.getRegular().getText());
@@ -39,6 +42,7 @@ public class GeneratePayloadSwingWorker extends SwingWorker {
                     break;
                 }
             }
+
 
             if(BurpExtender.isShowIntruderResult) {
                 synchronized (BurpExtender.gui.captcha) {

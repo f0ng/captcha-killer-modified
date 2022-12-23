@@ -7,10 +7,12 @@
  */
 package utils;
 import burp.BurpExtender;
+
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.xml.bind.DatatypeConverter;
+
 import static utils.Util.*;
 
 public class LableParser {
@@ -132,12 +134,18 @@ public class LableParser {
                 String words = BurpExtender.gui.tfWords.getText();
 
 
-                if (!words.equals("") && strr.contains(words)){
+                if (!words.trim().equals("") && strr.contains(words)){
                     byteImage = dataimgToimg(strr,words);
 
                 }else {
-                    if ((strr.contains("data:image") && !strr.startsWith("data:image")) || (strr.contains("data%3Aimage") && !strr.startsWith("data%3Aimage"))) {
+                    if ((strr.contains("data:image") ) || (strr.contains("data%3Aimage"))) {
+
+//                  0.20 注释下面，原因是响应包里有直接data:image开头的
+//                  if ((strr.contains("data:image") && !strr.startsWith("data:image")) || (strr.contains("data%3Aimage") && !strr.startsWith("data%3Aimage"))) {
+
+
                         //strr = new String(byteImage);
+                        strr = strr.replace("\\r\\n","").replace("\\","");
                         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
                         Pattern r = Pattern.compile(pattern);
                         Matcher m = r.matcher(strr);
@@ -147,6 +155,7 @@ public class LableParser {
                         if (!strr.contains("data:image")) {
                             strr = "data:image/jpeg;base64," + strr;
                         }
+                        BurpExtender.stdout.println(strr);
 //                    byteImage = strr.getBytes();
                         byteImage = DatatypeConverter.parseBase64Binary(strr.substring(strr.indexOf(",") + 1));
                     }
