@@ -82,6 +82,13 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 <img width="804" alt="image" src="https://user-images.githubusercontent.com/48286013/206609271-5cc8bdcf-2141-4616-9a60-7ab9493f18c2.png">
 
+【2022-12-14】 0.19
+
+增加URL解码、过滤图片编码中的`.`
+
+【2022-12-23】 0.20
+
+修复了url识别问题、爆破顺序错乱问题、响应包直接为base64编码导致爆破失败问题
 
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
