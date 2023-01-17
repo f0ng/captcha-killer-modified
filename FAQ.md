@@ -154,3 +154,9 @@ if __name__ == '__main__':
 # 9-forbideen响应、403响应解决
 
 由于后续脚本增加了Basic认证，可以自行添加Basic认证头即可
+
+# 10-提取关键字错误
+
+可以更换关键字，或者直接输入类似`"iVBO`图片文件头后的base64编码如下：
+<img width="543" alt="image" src="https://user-images.githubusercontent.com/48286013/212933576-8f5840c3-0332-455b-b9cc-0bc7206837f9.png">
+
