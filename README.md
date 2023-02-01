@@ -90,6 +90,16 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 修复了url识别问题、爆破顺序错乱问题、响应包直接为base64编码导致爆破失败问题
 
+【2023-2-1】 0.21
+
+- 增加默认验证码模板`ddddocr`，适配`codereg.py`
+
+<img width="675" alt="image" src="https://user-images.githubusercontent.com/48286013/215937694-d494a9b9-0b31-4c5c-adf8-0cb24e60f43c.png">
+
+- 增加识别结果关键字显示，方便查看关键字是否与验证码对应
+<img width="493" alt="image" src="https://user-images.githubusercontent.com/48286013/215937812-f43d592e-170b-4fb0-86e4-2f34fc16bb0e.png">
+
+
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
 >https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
