@@ -160,6 +160,8 @@ if __name__ == '__main__':
 可以更换关键字，或者直接输入类似`"iVBO`图片文件头后的base64编码如下：
 <img width="543" alt="image" src="https://user-images.githubusercontent.com/48286013/212933576-8f5840c3-0332-455b-b9cc-0bc7206837f9.png">
 
+感谢微信群师傅@手挥五弦 提供的解决方法
+
 # 11-使用@captcha@替代验证码参数，导致爆破错误
 
 增加intruder的爆破时间，验证码加载需要时间
