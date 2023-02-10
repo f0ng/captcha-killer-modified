@@ -99,7 +99,9 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 - 增加识别结果关键字显示，方便查看关键字是否与验证码对应
 <img width="493" alt="image" src="https://user-images.githubusercontent.com/48286013/215937812-f43d592e-170b-4fb0-86e4-2f34fc16bb0e.png">
 
-【2023-2-10】 0.21-beta    优化验证码编码中的`\n`处理
+【2023-2-10】 0.21-beta    
+- 优化验证码编码中的`\n`处理
+- 优化`@captcha@`的判断方式
 
 
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
