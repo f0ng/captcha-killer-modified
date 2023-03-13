@@ -112,6 +112,7 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 >
 >https://github.com/PoJun-Lab/blaster [验证码登录爆破]
 >
+>https://www.cnblogs.com/4geek/p/17145385.html#!comments [captcha-killer-modified详细用法及部分问题解决方案]
 
 
 ![f](https://starchart.cc/f0ng/captcha-killer-modified.svg)
