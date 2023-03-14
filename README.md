@@ -103,6 +103,9 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 - 优化验证码编码中的`\n`处理
 - 优化`@captcha@`的判断方式
 
+【2023-3-14】 0.22 重要问题修复
+- 修复了装载插件会影响proxy选项卡的问题
+
 
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
