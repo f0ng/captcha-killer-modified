@@ -1,10 +1,10 @@
 # captcha-killer-modified 适配新版Burpsuite
 
-## 原项目地址：
-
-## https://github.com/c0ny1/captcha-killer
+## 原项目地址：  https://github.com/c0ny1/captcha-killer
 
 # [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
+
+>https://www.cnblogs.com/4geek/p/17145385.html#!comments [captcha-killer-modified详细用法及部分问题解决方案]
 
 交流群
 
@@ -115,7 +115,7 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 >
 >https://github.com/PoJun-Lab/blaster [验证码登录爆破]
 >
->https://www.cnblogs.com/4geek/p/17145385.html#!comments [captcha-killer-modified详细用法及部分问题解决方案]
+
 
 
 ![f](https://starchart.cc/f0ng/captcha-killer-modified.svg)
