@@ -4,7 +4,7 @@
 
 # [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
->https://www.cnblogs.com/4geek/p/17145385.html#!comments [captcha-killer-modified详细用法及部分问题解决方案]
+>https://www.cnblogs.com/4geek/p/17145385.html#!comments [captcha-killer-modified详细用法及部分问题解决方案(如验证码识别位数问题)]
 
 交流群
 
