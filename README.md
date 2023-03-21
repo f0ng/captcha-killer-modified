@@ -4,6 +4,15 @@
 
 # [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
+### 文章案例
+>https://github.com/c0ny1/captcha-killer  [插件源项目]
+>
+>https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
+>
+>https://github.com/sml2h3/ddddocr [验证码识别项目]
+>
+>https://github.com/PoJun-Lab/blaster [验证码登录爆破]
+>
 >https://www.cnblogs.com/4geek/p/17145385.html#!comments [captcha-killer-modified详细用法及部分问题解决方案(如验证码识别位数问题)]
 
 交流群
@@ -107,14 +116,7 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 - 修复了装载插件会影响proxy选项卡的问题
 
 
->https://github.com/c0ny1/captcha-killer  [插件源项目]
->
->https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
->
->https://github.com/sml2h3/ddddocr [验证码识别项目]
->
->https://github.com/PoJun-Lab/blaster [验证码登录爆破]
->
+
 
 
 
