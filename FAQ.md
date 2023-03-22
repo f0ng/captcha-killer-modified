@@ -45,7 +45,7 @@ Content-Length: 8332
 ```python
 async def handle_cb(request) :
     img_base64 = await request.text()
-    img_bytes = base64.b64decode(img_ base64)
+    img_bytes = base64.b64decode(img_base64)
     return web. Response(text=ocr.classification(img_bytes))
 ```
 
