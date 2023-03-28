@@ -115,8 +115,9 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 【2023-3-14】 0.22 重要问题修复
 - 修复了装载插件会影响proxy选项卡的问题
 
-
-
+【2023-3-28】 0.23 
+- 增加[验证码返回包中明文返回验证码爆破案例](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md#13-%E9%AA%8C%E8%AF%81%E7%A0%81%E5%93%8D%E5%BA%94%E5%8C%85%E6%9C%89%E6%98%8E%E6%96%87%E9%AA%8C%E8%AF%81%E7%A0%81%E5%A6%82%E4%BD%95%E9%85%8D%E5%90%88%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8)
+- base64编码中应对`fromUrlSafe`函数(`-`转义为`+`,`_`转义为`/`)
 
 
 
