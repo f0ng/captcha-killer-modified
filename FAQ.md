@@ -173,7 +173,7 @@ if __name__ == '__main__':
 
 # 12-验证码中为base64编码，如何识别验证码
 
- json格式中，在关键字中填写关键字；其他格式可以参考[10-提取关键字错误](https://github.com/f0ng/captcha-killer-modified/edit/main/FAQ.md#10-%E6%8F%90%E5%8F%96%E5%85%B3%E9%94%AE%E5%AD%97%E9%94%99%E8%AF%AF)
+ json格式中，在关键字中填写关键字；其他格式可以参考[10-提取关键字错误](#10-提取关键字错误)
  
  <img width="459" alt="image" src="https://user-images.githubusercontent.com/48286013/228225048-12a545fa-6530-42cb-8810-2651b793c045.png">
 
