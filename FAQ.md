@@ -1,6 +1,8 @@
 * [验证码二次处理案例](#6-验证码进行二次处理的案例验证码为gif图且验证码具体是在gif图的第二帧无法直接识别)
 * [验证码调试方法](7-验证码识别顺序错误验证码识别正确但是intruder登录接口的验证码识别错误的调试方法)
 * [验证码响应包有token参数，登录需校验情况如何设置](8-验证码中有token等校验参数返回登录包中有校验token如何进行设置爆破)
+* [验证码中为base64，如何识别验证码](12-验证码中为base64编码，如何识别验证码)
+* [验证码响应包有明文验证码，如何配合工具使用](13-验证码响应包有明文验证码，如何配合工具使用)
 
 # 有问题请在FAQ或者README寻找一下，如果没找到请提issue
 # 1-用法
@@ -160,10 +162,36 @@ if __name__ == '__main__':
 # 10-提取关键字错误
 
 可以更换关键字，或者直接输入类似`"iVBO`图片文件头后的base64编码如下：
-<img width="543" alt="image" src="https://user-images.githubusercontent.com/48286013/212933576-8f5840c3-0332-455b-b9cc-0bc7206837f9.png">
+
+<img width="353" alt="image" src="https://user-images.githubusercontent.com/48286013/212933576-8f5840c3-0332-455b-b9cc-0bc7206837f9.png">
 
 感谢微信群师傅@手挥五弦 提供的解决方法
 
 # 11-使用@captcha@替代验证码参数，导致爆破错误
 
 增加intruder的爆破时间，验证码加载需要时间
+
+# 12-验证码中为base64编码，如何识别验证码
+
+ json格式中，在关键字中填写关键字；其他格式可以参考[10-提取关键字错误](https://github.com/f0ng/captcha-killer-modified/edit/main/FAQ.md#10-%E6%8F%90%E5%8F%96%E5%85%B3%E9%94%AE%E5%AD%97%E9%94%99%E8%AF%AF)
+ 
+ <img width="459" alt="image" src="https://user-images.githubusercontent.com/48286013/228225048-12a545fa-6530-42cb-8810-2651b793c045.png">
+
+# 13-验证码响应包有明文验证码，如何配合工具使用
+
+当遇到了验证码在验证码响应包里出现，如下:
+
+<img width="459" alt="image" src="https://user-images.githubusercontent.com/48286013/228225587-976ff40a-cce9-47bf-890b-0c8107c3e1a7.png">
+
+可以直接通过工具提取验证码的值
+
+<img width="441" alt="image" src="https://user-images.githubusercontent.com/48286013/228225665-f1628889-aebd-4abb-9e97-cb3b2e75f619.png">
+
+在burp模块中使用@captcha-killer-modified@替换验证码参数即可
+repeater举例，请求为
+
+<img width="353" alt="image" src="https://user-images.githubusercontent.com/48286013/228225728-2e2f6880-7baf-42b5-9ae3-5d4f0008c934.png">
+
+实际请求为
+
+<img width="401" alt="image" src="https://user-images.githubusercontent.com/48286013/228225779-0daaed42-a638-405d-8c26-507590dec4c8.png">
