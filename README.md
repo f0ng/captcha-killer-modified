@@ -4,6 +4,14 @@
 
 # [用法与常见报错](https://github.com/f0ng/captcha-killer-modified/blob/main/FAQ.md)
 
+## 免责声明
+
+该工具仅用于安全自查检测
+
+由于传播、利用此工具所提供的信息而造成的任何直接或者间接的后果及损失，均由使用者本人负责，作者不为此承担任何责任。
+
+本人拥有对此工具的修改和解释权。未经网络安全部门及相关部门允许，不得善自使用本工具进行任何攻击活动，不得以任何方式将其用于商业目的。
+
 ### 文章案例
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
@@ -23,6 +31,10 @@
 二维码失效请加微信`f-f0ng`、备注captchakillermodified交流
 
 关注主页公众号（only security），回复`captchakillermodified`获取下载地址】
+
+
+
+
 
 ### 提issue之前请说明如下字段：
 1. burp版本
