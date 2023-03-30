@@ -3,6 +3,7 @@
 * [验证码响应包有token参数，登录需校验情况如何设置](#8-验证码中有token等校验参数返回登录包中有校验token如何进行设置爆破)
 * [验证码中为base64，如何识别验证码](#12-验证码中为base64编码如何识别验证码)
 * [验证码响应包有明文验证码，如何配合工具使用](#13-验证码响应包有明文验证码如何配合工具使用)
+* [intruder模块都是一个验证码](#14-intruder模块都是一个验证码)
 
 # 有问题请在FAQ或者README寻找一下，如果没找到请提issue
 # 1-用法
@@ -195,3 +196,9 @@ repeater举例，请求为
 实际请求为
 
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/48286013/228225779-0daaed42-a638-405d-8c26-507590dec4c8.png">
+
+# 14-intruder模块都是一个验证码
+
+查看intruder的attack type是否为`Pitchfork`，如果不是，那就选中这个模式，再测试，否则会出现验证码固定的问题
+
+<img width="401" alt="image" src="https://user-images.githubusercontent.com/48286013/228872362-0f6cff5d-26b8-48ce-9c1f-87352f68208e.png">
