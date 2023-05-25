@@ -199,9 +199,11 @@ repeater举例，请求为
 
 # 14-intruder模块都是一个验证码
 
-查看intruder的attack type是否为`Pitchfork`，如果不是，那就选中这个模式，再测试，否则会出现验证码固定的问题
+1. 查看intruder的attack type是否为`Pitchfork`，如果不是，那就选中这个模式，再测试，否则会出现验证码固定的问题
 
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/48286013/228872362-0f6cff5d-26b8-48ce-9c1f-87352f68208e.png">
+
+2. 选中`是否使用该插件`再进行测试
 
 # 15-获取验证码接口400
 
