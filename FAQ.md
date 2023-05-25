@@ -203,6 +203,6 @@ repeater举例，请求为
 
 <img width="401" alt="image" src="https://user-images.githubusercontent.com/48286013/228872362-0f6cff5d-26b8-48ce-9c1f-87352f68208e.png">
 
-# 15-验证码加了`|`导致爆破出错？
+# 15-获取验证码接口400
 
-`|`是为了方便查看后续提取的token参数，不影响正常使用，实际请求包请到`logger`或者`logger++`查看
+通过logger查看请求包，打开`\n`视图，查看是不是以`\n`换行，如果是，请用`send to captcha panel`发送验证码，正常情况下，http包是以`\r\n`换行
