@@ -135,4 +135,10 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 - 修复验证码在intruder中无法显示的bug
 - 再次修复了装载插件会影响proxy选项卡的问题
 
+【2023-7-2】 0.24.1
+- 修复加载插件影响intruder速度的问题(临时增加了一个按钮控制是否开启该插件)
+
+<img width="642" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/8c8132ac-dd38-494f-aa47-80b6db4a7c93">
+
+
 ![f](https://starchart.cc/f0ng/captcha-killer-modified.svg)
