@@ -1,4 +1,4 @@
-* [验证码二次处理案例](#6-验证码进行二次处理的案例验证码为gif图且验证码具体是在gif图的第二帧无法直接识别)
+<img width="1290" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/27a1d1ac-e43d-455e-a5f9-058d24baea04">* [验证码二次处理案例](#6-验证码进行二次处理的案例验证码为gif图且验证码具体是在gif图的第二帧无法直接识别)
 * [验证码调试方法](#7-验证码识别顺序错误验证码识别正确但是intruder登录接口的验证码识别错误的调试方法)
 * [验证码响应包有token参数，登录需校验情况如何设置](#8-验证码中有token等校验参数返回登录包中有校验token如何进行设置爆破)
 * [验证码中为base64，如何识别验证码](#12-验证码中为base64编码如何识别验证码)
@@ -208,3 +208,9 @@ repeater举例，请求为
 # 15-获取验证码接口400
 
 通过logger查看请求包，打开`\n`视图，查看是不是以`\n`换行，如果是，请用`send to captcha panel`发送验证码，正常情况下，http包是以`\r\n`换行
+
+# 16-获取的都是一个验证码
+
+`0.24.1`临时更新插件按钮，开启按钮才会使用该插件
+
+<img width="642" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/8c8132ac-dd38-494f-aa47-80b6db4a7c93">
