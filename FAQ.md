@@ -214,3 +214,12 @@ repeater举例，请求为
 `0.24.1`临时更新插件按钮，开启按钮才会使用该插件
 
 <img width="642" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/8c8132ac-dd38-494f-aa47-80b6db4a7c93">
+
+
+# 17-报错(module 'PIL.Image' has no attribute 'ANTIALIAS')
+
+降级Pillow的版本，比如使用9.5.0版本
+
+`pip uninstall -y Pillow`
+
+`pip install Pillow==9.5.0`
