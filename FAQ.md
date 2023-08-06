@@ -10,6 +10,7 @@
 
 #### [releases](https://github.com/f0ng/captcha-killer-modified/releases/)下载最新插件与验证码识别端(`captcha-killer-modified.jar`、`codereg.py`)
 #### 使用Burp加载`captcha-killer-modified.jar`
+#### 安装python依赖，根据[requirement.txt](https://github.com/f0ng/captcha-killer-modified/blob/main/requirement.txt)的内容进行下载依赖(pip install -r requirement.txt )
 #### 再使用`python3 codereg.py`开启验证码识别模块，前提安装[ddddocr](https://github.com/sml2h3/ddddocr)
 #### <a id="Template">模板</a>
 ```
