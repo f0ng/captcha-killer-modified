@@ -140,5 +140,8 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 <img width="642" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/8c8132ac-dd38-494f-aa47-80b6db4a7c93">
 
+【2023-9-15】 0.24.2
+- 优化@captcha-killer-modified@关键字
+
 
 ![f](https://starchart.cc/f0ng/captcha-killer-modified.svg)
