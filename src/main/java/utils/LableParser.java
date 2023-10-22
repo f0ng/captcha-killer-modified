@@ -145,7 +145,8 @@ public class LableParser {
 
 
                         //strr = new String(byteImage);
-                        strr = strr.replace("\\r\\n","").replace("\\","");
+                        strr = strr.replace("\\r\\n","").replace("\\n","");
+                        strr = strr.replace("\\","");
                         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
                         Pattern r = Pattern.compile(pattern);
                         Matcher m = r.matcher(strr);
@@ -153,9 +154,9 @@ public class LableParser {
                             strr = m.group(0).replace("\"", "").replace("&", "").replace("Base64:", "").replace("base64:", "");
                         }
                         if (!strr.contains("data:image")) {
-                            strr = "data:image/jpeg;base64," + strr;
+                            strr = "o;base64," + strr;
                         }
-                        BurpExtender.stdout.println(strr);
+//                        BurpExtender.stdout.println(strr);
 //                    byteImage = strr.getBytes();
                         byteImage = DatatypeConverter.parseBase64Binary(strr.substring(strr.indexOf(",") + 1));
                     }

@@ -110,8 +110,10 @@ public class Util {
 
     public static byte[] dataimgToimg(String str_img) throws IOException {
         String pattern = "(data:image.*?)[\"|&]|(data%2Aimage.*?)[\"|&]";
-        str_img = str_img.replace("\\r\\n","").replace("\\","");
-        str_img = str_img.replace("\\n","");
+        str_img = str_img.replace("\\r\\n","");
+        str_img = str_img.replace("\\n","").replace("\\","");
+        str_img = str_img.replace("_","/").replace("-","+");
+//        stdout.println(str_img);
         str_img = URLDecoder.decode(str_img,"utf-8");
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
@@ -137,25 +139,29 @@ public class Util {
         if (m.find()) {
             str_img = m.group(1).replace("\"", "").replace("&", "").replace("Base64:", "").replace("base64:", "");
         }
-        if( str_img.length() > 150){
+        if( str_img.length() > 300){
             str_img = "提取关键字过长，请确认提取是否正确！";
         }
+
+//        if( str_img.length() > 100){
+//            str_img = str_img.substring(0,10) + "……" + str_img.substring(str_img.length()-10  , str_img.length());
+//        }
 
         return str_img;
     }
 
 
-
     public static byte[] dataimgToimg(String str_img,String words) throws IOException {
         String pattern = "(" + words + ".*?)[,&}/+=\\w]+";
-        str_img = str_img.replace("\\r\\n","").replace("\\","");
-        str_img = str_img.replace("\\n","");
-
+        str_img = str_img.replace("\\r\\n","");
+        str_img = str_img.replace("\\n","").replace("\\","");
+        str_img = str_img.replace("_","/").replace("-","+");
+//        stdout.println(str_img);
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str_img);
         str_img = URLDecoder.decode(str_img,"utf-8");
         if (m.find( )) {
-            stdout.println(m.group(0));
+//            stdout.println(m.group(0));
             str_img = m.group(0).replace("\"","").replace(words,"").replace(":","").replace("&","").replace(",","") ;
         }
         if (!str_img.contains("data:image")){
@@ -170,6 +176,7 @@ public class Util {
         //InputStream buffin = new ByteArrayInputStream(img);
         return img;
     }
+
 
     public static boolean isImage(byte[] img){
         // Reference: https://www.cnblogs.com/shihaiming/p/10404700.html
@@ -207,7 +214,7 @@ public class Util {
             image = ImageIO.read(buffin);
             icon = new ImageIcon(image);
         } catch (IOException e) {
-            BurpExtender.stderr.println(e.getMessage());
+//            BurpExtender.stderr.println(e.getMessage());
             icon = null;
         }
         return icon;

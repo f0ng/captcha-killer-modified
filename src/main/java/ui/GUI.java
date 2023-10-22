@@ -25,8 +25,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static burp.BurpExtender.*;
 import static utils.Util.dataimgToimg;
 import static utils.Util.extractToken;
 
@@ -48,12 +50,21 @@ public class GUI {
     public JTextField tfWords; // 关键字textfield
 
     private JLabel lbToken; // token关键字
-    public JTextField tfToken; // token关键字
+    public JTextField tfToken; // token关键字 输入
 
     private JLabel lbTokenex; // token关键字显示
     public JLabel tfTokenex; // token关键字显示
 
+
     public String tokenwords ; //token 关键字提取的结果
+    public String tokenword ; //token 关键字提取的结果，如果太长就会提示太长
+
+    private JLabel lbcapex; // 识别的验证码显示
+    public JLabel tfcapex; // 识别的验证码显示
+
+    public JRadioButton usebutton; // 识别的验证码显示
+
+    public String cap;
 
     private JLabel lbImage;
     private JToggleButton tlbLock;
@@ -91,6 +102,7 @@ public class GUI {
 
     //一些公共变量
     public byte[] byteImg;
+    public byte[] byteRes;
     public static final List<CaptchaEntity> captcha = new ArrayList<CaptchaEntity>();
 
     public JTextField getTfwords(){
@@ -157,6 +169,7 @@ public class GUI {
 
     public void initGUI(){
         String tokenwords = "";
+        String cap_shibie = "";
         MainPanel = new JPanel();
         MainPanel.setBorder(new EmptyBorder(2, 2, 2, 2));
         MainPanel.setLayout(new BorderLayout(0, 0));
@@ -201,6 +214,13 @@ public class GUI {
         lbTokenex = new JLabel("提取的关键字:");
         tfTokenex = new JLabel("");
 
+
+        GUI.this.cap = cap_shibie;
+        lbcapex = new JLabel("验证码识别为:");
+        tfcapex = new JLabel("");
+
+        usebutton = new JRadioButton("是否使用该插件");
+
 //        tlbLock = new JToggleButton("锁定");
 //        tlbLock.setToolTipText("当配置好所有选项后，请锁定防止配置被改动！");
 
@@ -215,13 +235,20 @@ public class GUI {
         GBC gbc_lbwords = new GBC(0,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,1);
         GBC gbc_tfwords = new GBC(1,0,1,1).setFill(GBC.HORIZONTAL).setWeight(20,1).setInsets(3,3,0,0);
 
+
         GBC gbc_lbtoken = new GBC(0,1,1,1).setFill(GBC.NONE).setInsets(3,3,0,1);
         GBC gbc_tftoken = new GBC(1,1,1,1).setFill(GBC.BOTH).setWeight(20,1).setInsets(3,3,0,0);
         GBC gbc_lbtokenex = new GBC(2,1,1,1).setFill(GBC.BOTH).setInsets(3,3,0,1);
         GBC gbc_tftokenex = new GBC(3,1,1,1).setFill(GBC.NONE).setWeight(20,1).setInsets(3,3,0,0);
 
+
+
+        GBC gbc_lbcapex = new GBC(0,2,1,1).setFill(GBC.BOTH).setInsets(3,3,0,1);
+        GBC gbc_tfcapex = new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(20,1).setInsets(3,3,0,0);
+        GBC gbc_usebutton = new GBC(2,2,1,1).setFill(GBC.BOTH).setWeight(20,1).setInsets(3,3,0,0);
+
         //GBC gbc_tlblock = new GBC(4,0,1,1).setFill(GBC.BOTH).setInsets(3,3,0,3);
-        GBC gbc_taresponse = new GBC(0,2,100,100).setFill(GBC.BOTH).setWeight(100,100).setInsets(3,3,3,3);
+        GBC gbc_taresponse = new GBC(0,3,100,100).setFill(GBC.BOTH).setWeight(100,100).setInsets(3,3,3,3);
 
 
         imgRigthPanel.add(lbWords,gbc_lbwords);
@@ -235,6 +262,10 @@ public class GUI {
 
         imgRigthPanel.add(lbTokenex,gbc_lbtokenex);
         imgRigthPanel.add(tfTokenex,gbc_tftokenex);
+
+        imgRigthPanel.add(lbcapex,gbc_lbcapex);
+        imgRigthPanel.add(tfcapex,gbc_tfcapex);
+        imgRigthPanel.add(usebutton,gbc_usebutton);
 
 
 
@@ -412,7 +443,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                System.out.println(byteImg);
+//                System.out.println(byteImg);
 
                 if(byteImg == null){
                     JOptionPane.showMessageDialog(null,"请先获取要识别的图片","captcha-killer提示",JOptionPane.WARNING_MESSAGE);
@@ -464,7 +495,7 @@ public class GUI {
                     JMenu menuTmplManager = new JMenu("模版库");
                     JMenuItem miGeneralTmpl = new JMenuItem("通用模版");
                     JMenuItem miTesseract = new JMenuItem("tesseract-ocr-web");
-                    JMenuItem miBaiduOCR = new JMenuItem("Baidu OCR");
+                    JMenuItem miBaiduOCR = new JMenuItem("ddddocr");
                     JMenuItem miCNNCaptcha = new JMenuItem("cnn_captcha");
                     JMenuItem miSaveTpl = new JMenuItem("保存为模版");
                     JMenuItem miUpdateTpl = new JMenuItem("更新模版");
@@ -520,24 +551,23 @@ public class GUI {
                     miBaiduOCR.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tfInterfaceURL.setText("https://aip.baidubce.com:443");
-                            taInterfaceTmplReq.setText("POST /rest/2.0/ocr/v1/accurate?access_token=[TOKEN] HTTP/1.1\r\n" +
-                                    "Host: aip.baidubce.com\r\n" +
-                                    "Connection: close\r\n" +
-                                    "Cache-Control: max-age=0\r\n" +
-                                    "Upgrade-Insecure-Requests: 1\r\n" +
-                                    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36\r\n" +
-                                    "Sec-Fetch-Mode: navigate\r\n" +
-                                    "Sec-Fetch-User: ?1\r\n" +
-                                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3\r\n" +
-                                    "Sec-Fetch-Site: none\r\n" +
-                                    "Accept-Encoding: gzip, deflate\r\n" +
-                                    "Accept-Language: zh-CN,zh;q=0.9\r\n" +
-                                    "Content-Type: application/x-www-form-urlencoded\r\n" +
-                                    "Content-Length: 55\r\n" +
-                                    "\r\n" +
-                                    "image=<@URLENCODE><@BASE64><@IMG_RAW></@IMG_RAW></@BASE64></@URLENCODE>");
-                            cbmRuleType.setSelectedIndex(Rule.RULE_TYPE_REGULAR);
+                            tfInterfaceURL.setText("http://127.0.0.1:8888");
+                            taInterfaceTmplReq.setText("POST /reg HTTP/1.1\n" +
+                                    "Host: 127.0.0.1:8888\n" +
+                                    "Authorization:Basic f0ngauth\n" +
+                                    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) " +
+                                    "Gecko/20100101 Firefox/97.0\n" +
+                                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif," +
+                                    "image/webp,*/*;q=0.8\n" +
+                                    "Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\n" +
+                                    "Accept-Encoding: gzip, deflate\n" +
+                                    "Connection: keep-alive\n" +
+                                    "Upgrade-Insecure-Requests: 1\n" +
+                                    "Content-Type: application/x-www-form-urlencoded\n" +
+                                    "Content-Length: 8332\n" +
+                                    "\n" +
+                                    "<@BASE64><@IMG_RAW></@IMG_RAW></@BASE64>");
+                            cbmRuleType.setSelectedIndex(Rule.RULE_TYPE_RESPONSE_DATA);
                             tfRegular.setText("\"words\"\\: \"(.*?)\"\\}");
                         }
                     });
@@ -810,47 +840,51 @@ public class GUI {
         }
 
         public void run() {
-            BurpExtender.gui.btnGetCaptcha.setEnabled(false);
+            gui.btnGetCaptcha.setEnabled(false);
             //清洗验证码URL
             HttpService service = new HttpService(url);
-            BurpExtender.gui.tfURL.setText(service.toString());
+            gui.tfURL.setText(service.toString());
 
             try {
                 byte[][] bytesResResp = Util.requestImage(url,raw);
 //                BurpExtender.stdout.println("820");
-                byte[] byteRes = bytesResResp[0]; // 只有响应包
+//                byte[] byteRes = bytesResResp[0]; // 只有响应包
+                gui.byteRes = bytesResResp[0]; // 只有响应包
                 byte[] byteResp = bytesResResp[1]; // 响应头+响应包
-                String words = BurpExtender.gui.tfWords.getText().trim();
-                String token = BurpExtender.gui.tfToken.getText().trim();
+                String words = gui.tfWords.getText().trim();
+                String token = gui.tfToken.getText().trim();
 //                BurpExtender.stdout.println("825");
 
-                if (!token.trim().equals("")){
-                    BurpExtender.gui.tokenwords = extractToken(new String(byteResp) ,token);
-                    BurpExtender.gui.tfTokenex.setText(BurpExtender.gui.tokenwords);
-                }
-                BurpExtender.stdout.println(BurpExtender.gui.tokenwords);
-
-                if(!words.trim().equals("")){
-                    BurpExtender.gui.byteImg = dataimgToimg(new String(byteRes) ,words);
-                }else {
-//                    System.out.println("6666");
-                    //System.out.println(new String(byteRes));
-
-                    if (Util.isImage(byteRes)) {
-//                        System.out.println("55555");
-                        BurpExtender.gui.byteImg = byteRes;
-                    } else if (Util.isImage(new String(byteRes))) {
-//                        System.out.println("7777");
-                        BurpExtender.gui.byteImg = dataimgToimg(new String(byteRes));
+                if ( !token.trim().equals("") ) {
+                    gui.tokenwords = extractToken(new String(byteResp) ,token);
+                    if ( gui.tokenwords.length() > 40 ) {
+                        gui.tokenword = gui.tokenwords.substring(0,10) + "...." + gui.tokenwords.substring(gui.tokenwords.length()-10 , gui.tokenwords.length() );
+                        gui.tfTokenex.setText( gui.tokenword );
                     } else {
-//                        System.out.println("8888");
-                        BurpExtender.gui.lbImage.setIcon(null);
-//                        System.out.println("this isn't image");
-                        BurpExtender.gui.lbImage.setText("获取到的不是图片文件或者未设置关键词！");
-                        BurpExtender.gui.lbImage.setForeground(Color.RED);
+                        stdout.println(gui.tokenwords.length());
+                        gui.tfTokenex.setText( gui.tokenwords );
+                    }
+                } else {
+                    gui.tokenwords = "";
+                }
+                if(!words.trim().equals("")){
+
+                    gui.byteImg = dataimgToimg(new String(gui.byteRes) ,words);
+
+                }else {
+                    if (Util.isImage(gui.byteRes)) {
+                        BurpExtender.gui.byteImg = gui.byteRes;
+                    } else if (Util.isImage(new String(gui.byteRes))) {
+                        BurpExtender.gui.byteImg = dataimgToimg(new String(gui.byteRes));
+                    } else {
+                        gui.lbImage.setIcon(null);
+                        gui.lbImage.setText("获取到的不是图片文件或者未设置关键词！");
+                        gui.lbImage.setForeground(Color.RED);
                         return;
                     }
                 }
+                stdout.println( "get:" + Arrays.toString(BurpExtender.gui.byteImg).length());
+//                stdout.println("successsuccesssuccesssuccessend\n");
 
                 ImageIcon icon = Util.byte2img(BurpExtender.gui.byteImg);
                 BurpExtender.gui.lbImage.setIcon(icon);
@@ -858,7 +892,7 @@ public class GUI {
             } catch (Exception e) {
                 BurpExtender.stderr.println(e.getMessage());
             }finally {
-                BurpExtender.gui.getBtnGetCaptcha().setEnabled(true);
+                gui.getBtnGetCaptcha().setEnabled(true);
             }
         }
     }
@@ -877,17 +911,39 @@ public class GUI {
 
         Rule rule = new Rule(type,pattern);
         MatchResult result = RuleMannager.match(rspRaw, rule);
-        cap.setResult(result.getResult());
+//        String result_1 = result.getResult();
+//        if ( !gui.tokenwords.equals("") ) {
+//            cap.setResult(result_1 + "|" + gui.tokenwords);
+//            int row = captcha.size();
+//            stdout.println(cap.getResult());
+//            captcha.add(cap);
+//            BurpExtender.gui.getModel().fireTableRowsInserted(row, row);
+//            stdout.println("nulllllll");
+//        }
+//        else
+//            cap.setResult(result_1);
+
+//        cap.setResult(result_1);
         //排查请求速度过快可能会导致
-        BurpExtender.stdout.println("---------------------------------------------");
-        BurpExtender.stdout.println(rspRaw);
+//        BurpExtender.stdout.println("---------------------------------------------");
+//        BurpExtender.stdout.println(rspRaw);
+        BurpExtender.stdout.println(gui.tokenwords);
         BurpExtender.stdout.println("[+] res = " + result.getResult());
+        if(BurpExtender.isShowIntruderResult) {
+            synchronized (gui.captcha) {
+                int row = gui.captcha.size();
+                cap.setResult(cap.getResult() + "|"+ gui.tokenwords);
+                gui.captcha.add(cap);
+                gui.getModel().fireTableRowsInserted(row, row);
+            }
+        }
         return cap;
     }
 
     public static String identifyCaptchas(String url,String raw,byte[] byteImg,int type,String pattern) throws IOException {
         CaptchaEntity cap = new CaptchaEntity();
         cap.setImage(byteImg);
+        stdout.println( "identify:" + Arrays.toString(byteImg).length());
         HttpClient http = new HttpClient(url, raw, byteImg);
         cap.setReqRaw(http.getRaw().getBytes());
         byte[] rsp = http.doReust();
@@ -896,12 +952,32 @@ public class GUI {
 
         Rule rule = new Rule(type,pattern);
         MatchResult result = RuleMannager.match(rspRaw, rule);
-        cap.setResult(result.getResult());
+//        if ( !gui.tokenwords.equals("") )
+//            cap.setResult(result.getResult() + "|"+ gui.tokenwords);
+//        else
+            cap.setResult(result.getResult());
         //排查请求速度过快可能会导致
-        BurpExtender.stdout.println("---------------------------------------------");
-        BurpExtender.stdout.println(rspRaw);
+//        BurpExtender.stdout.println("---------------------------------------------");
+//        BurpExtender.stdout.println("---------------------------------------------");
+//        BurpExtender.stdout.println(rspRaw);
+        BurpExtender.stdout.println(gui.tokenwords);
         BurpExtender.stdout.println("[+] res = " + result.getResult());
+        if(BurpExtender.isShowIntruderResult) {
+            synchronized (gui.captcha) {
+                int row = gui.captcha.size();
+                if (gui.tokenwords.equals("")){
+                    cap.setResult( cap.getResult() );
+                }else
+                cap.setResult(cap.getResult() + "|"+ gui.tokenwords);
+
+                gui.captcha.add(cap);
+                gui.getModel().fireTableRowsInserted(row, row);
+            }
+        }
         return result.getResult();
+    }
+    public Boolean getUsebutton(){
+        return usebutton.isSelected();
     }
 
     public  class IdentifyCaptchaThread extends Thread{
@@ -947,6 +1023,10 @@ public class GUI {
             cap.setReqRaw(http.getRaw().getBytes());
             cap.setRsqRaw(rsp);
             cap.setResult(result.getResult());
+
+
+            gui.cap = result.getResult();
+            tfcapex.setText(gui.cap);
 
             synchronized (captcha){
                 int row = captcha.size();

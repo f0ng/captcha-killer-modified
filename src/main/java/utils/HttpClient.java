@@ -121,7 +121,15 @@ public class HttpClient {
 
                     if (header.indexOf(":") > 0) {
                         String key = header.substring(0, header.indexOf(":"));
-                        String value = Util.trimStart(header.substring(header.indexOf(":")+1, header.length()));
+                        String value;
+                        try {
+                            value = Util.trimStart(header.substring(header.indexOf(":") + 1));
+                        }catch (Exception e){
+                            value = header.substring(header.indexOf(":") + 1);
+                        }
+
+                        if (value.equals(""))
+                            value = " ";
                         this.headers.put(key, value);
                     }
                 }
@@ -178,7 +186,7 @@ public class HttpClient {
          * 在处理GET数据包时,要注意包结果严格来讲最后要有两个\r\n。有的web服务器对数据包要求比较严格，可能会导致请求识别。
          * 该问题曾出现在请求某网站的验证码时，返回了403状态。
          */
-        System.out.println(method);
+        // System.out.println(method);
 //        System.out.println(data);
         if(method.equals("POST")) {
             int length = data.length();

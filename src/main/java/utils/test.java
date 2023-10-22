@@ -1,11 +1,11 @@
 package utils;
 
+import javax.swing.*;
+import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.*;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  * @author f0ng

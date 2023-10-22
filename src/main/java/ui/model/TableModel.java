@@ -82,7 +82,9 @@ public class TableModel extends AbstractTableModel {
                             }
                             System.out.println("*****");
                             System.out.println(strr);
-                            strr = strr.replace("\\r\\n","").replace("\\","");
+
+                            strr = strr.replace("\\r\\n","").replace("\\n","");
+                            strr = strr.replace("\\","");
                             byte[] byteImage = DatatypeConverter.parseBase64Binary(strr.substring(strr.indexOf(",") + 1));
                             ImageIcon icon = byte2img(byteImage);
                             table.setRowHeight(row, icon.getIconHeight() + 5);//让行高自动适应图片高
