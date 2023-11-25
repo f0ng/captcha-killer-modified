@@ -224,3 +224,7 @@ repeater举例，请求为
 `pip uninstall -y Pillow`
 
 `pip install Pillow==9.5.0`
+
+# 18-无法获取验证码
+
+更换burp版本进行尝试，目前原因未知
