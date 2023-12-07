@@ -227,4 +227,8 @@ repeater举例，请求为
 
 # 18-无法获取验证码
 
-更换burp版本进行尝试，目前原因未知
+~~更换burp版本进行尝试，目前原因未知~~ 使用0.25.3版本即可
+
+# 19-The port is required to be int
+
+运行脚本报错，The port is required to be int，将脚本中`default="8888"`更改为`default=8888`再次运行即可
