@@ -163,11 +163,16 @@ if __name__ == '__main__':
 
 # 10-提取关键字错误
 
-可以更换关键字，或者直接输入类似`"iVBO`图片文件头后的base64编码如下：
+1. 可以更换关键字，或者直接输入类似`"iVBO`图片文件头后的base64编码如下：
 
 <img width="353" alt="image" src="https://user-images.githubusercontent.com/48286013/212933576-8f5840c3-0332-455b-b9cc-0bc7206837f9.png">
 
 感谢微信群师傅@手挥五弦 提供的解决方法
+
+2. 如果遇到base64的，以下案例可以使用`data:image/jpeg;base64`，其他情况类似
+
+<img width="353" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/27ee84d1-0f79-4dc2-94c8-b5da9621141f">
+
 
 # 11-使用@captcha@替代验证码参数，导致爆破错误
 
