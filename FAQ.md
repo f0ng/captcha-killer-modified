@@ -4,7 +4,8 @@
 * [验证码中为base64，如何识别验证码](#12-验证码中为base64编码如何识别验证码)
 * [验证码响应包有明文验证码，如何配合工具使用](#13-验证码响应包有明文验证码如何配合工具使用)
 * [intruder模块都是一个验证码](#14-intruder模块都是一个验证码)
-* [数字运算验证码](#20-数字运算验证码)
+* [一般的数字运算验证码](#20-数字运算验证码)
+* [混淆、变形的数字运算验证码](#21-混淆、变形的数字运算验证码)
 
 # 有问题请在FAQ或者README寻找一下，如果没找到请提issue
 # 1-用法
@@ -245,3 +246,8 @@ repeater举例，请求为
 
 <img width="410" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/82dc7506-e550-48a5-98c9-1a675110d2e0">
 
+# 21-混淆、变形的数字运算验证码
+
+使用`reg3`模板【默认不支持该接口，需捐赠】
+
+<img width="210" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/3ee0d46b-a700-4ef1-8f18-2c76366becac">
