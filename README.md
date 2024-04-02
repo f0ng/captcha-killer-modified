@@ -79,7 +79,6 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 ## 更新日志
 
-
 【2022-3-21】 增加可识别情况，~~当出现关键字为B/base64时，进行验证码识别~~
 
 【2022-3-24】 增加自定义关键字，删减锁定按钮
@@ -155,6 +154,18 @@ https://mp.weixin.qq.com/s/_P6OlL1xQaYSY1bvZJL4Uw
 
 【2023-9-15】 0.24.2
 - 优化@captcha-killer-modified@关键字
+
+【2023-12-5】 0.24.3
+- 修复新版burp获取不到验证码问题
+
+【2024-1-4】 0.24.4
+- 服务端识别代码增加算术接口，可以进行算术验证码的识别
+
+【2024-4-2】 0.24.5
+1. 针对复杂算数验证码，进行训练获得模型，若有训练验证码的需求，可以联系作者代为训练，需捐赠，捐赠具体费用可以联系作者。这里取若依的验证码进行演示，测试了109个验证码，识别错误1个，准确率98%+
+<img width="159" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/077968b6-97ba-4366-baf9-ceba078020e7">
+
+2. 添加两个接口，添加reg2【识别无混淆的四则运算，项目默认模板】、reg3模板【识别混淆变形的若依四则运算验证码，默认模板不支持，需额外捐赠，捐赠具体费用可以联系作者】
 
 
 ![f](https://starchart.cc/f0ng/captcha-killer-modified.svg)
