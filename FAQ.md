@@ -248,6 +248,6 @@ repeater举例，请求为
 
 # 21-混淆、变形的数字运算验证码
 
-使用`reg3`模板【默认不支持该接口，需捐赠】
+使用`reg3`模板【默认不支持该接口，需捐赠，捐赠到一定额度可以有若依验证码的识别接口，以及进内部群的机会，后面可能会分享其他类型的技术，不局限于captcha-killer-modified这个插件，后期会酌情涨价】
 
 <img width="210" alt="image" src="https://github.com/f0ng/captcha-killer-modified/assets/48286013/3ee0d46b-a700-4ef1-8f18-2c76366becac">
