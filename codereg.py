@@ -56,7 +56,7 @@ async def handle_cb(request):
         return web.Response(text=str(zhi))
     elif '/'in res:
         zhi =  int(res.split('/')[0])/int(res.split('/')[1][:-1])
-        return web.Response(text=str(zhi))
+        return web.Response(text=str(int(zhi))）
     else:
         return web.Response(text=res)
 
