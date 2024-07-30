@@ -15,7 +15,7 @@
 ### 文章案例
 >https://github.com/c0ny1/captcha-killer  [插件源项目]
 >
->https://gv7.me/articles/2019/burp-captcha-killer-usage/ [插件用法]
+>https://gv7.me/articles/2019/burp-captcha-killer-usage/ [原插件用法]
 >
 >https://github.com/sml2h3/ddddocr [验证码识别项目]
 >
