@@ -48,12 +48,6 @@
 <img width="251" alt="image" src="https://github.com/f0ng/autoDecoder/assets/48286013/e9318b91-2521-4c14-93d8-9737fd7a4729">
 
 
-# 赞助合作商
-
-|                                                            | 赞助合作商 | 推荐理由                                                                                             |
-|------------------------------------------------------------|------------|--------------------------------------------------------------------------------------------------|
-| ![YesCaptcha](https://cdn.wenanzhe.com/img/yescaptcha.png) | [YesCaptcha](https://yescaptcha.com/i/bmHz3C) | 谷歌reCaptcha验证码 / hCaptcha验证码 / funCaptcha验证码商业级识别接口 [点我](https://yescaptcha.com/i/bmHz3C) 直达VIP4 |
-
 ## 插件优化的地方
 1. 修改了原项目中`sun.misc.BASE64Encoder`报错的问题
 
