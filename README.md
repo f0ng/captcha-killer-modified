@@ -25,7 +25,7 @@
 
 交流群
 
-<img width="389" alt="image" src="https://user-images.githubusercontent.com/48286013/204838629-e289f0fe-3bd8-4393-82ef-a2a19d7b7f4c.png">
+<img width="100" alt="image" src="https://user-images.githubusercontent.com/48286013/204838629-e289f0fe-3bd8-4393-82ef-a2a19d7b7f4c.png">
 
 
 二维码失效请加微信`f-f0ng`、备注captchakillermodified交流
@@ -33,13 +33,22 @@
 关注主页公众号（only security），回复`captchakillermodified`获取下载地址】
 
 
-
-
-
 ### 提issue之前请说明如下字段：
 1. burp版本
 2. 启动burp的jdk版本
 3. burp的Extender中Options配置的jdk版本
+
+### 安全培训
+
+![brzif4oz b4w](https://github.com/user-attachments/assets/dd24bae0-d672-40f6-bd04-144671b67187)
+
+学网络安全，就选玲珑安全！专业漏洞挖掘，精准定位风险；助力技能提升，塑造安全精英;玲珑安全，为您的数字世界保驾护航！  
+在线免费学习网络安全，涵盖src漏洞挖掘，0基础安全入门。适用于小白，进阶，高手: https://space.bilibili.com/602205041  
+玲珑安全往期学员报喜🎉: https://www.ifhsec.com/list.html  
+玲珑安全漏洞挖掘培训学习联系微信: `f-f0ng`  
+备注：玲珑安全培训
+
+
 
 # 捐赠 （如果项目有帮助到您，可以选择捐赠一些费用用于captcha-killer-modified的后续版本维护，本项目长期维护）
 
