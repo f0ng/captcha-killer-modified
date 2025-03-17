@@ -1,4 +1,10 @@
 # captcha-killer-modified 适配新版Burpsuite
+[![Repo stars](https://img.shields.io/github/stars/f0ng/captcha-killer-modified)](https://github.com/f0ng/captcha-killer-modified/stargazers)
+[![Downloads total](https://img.shields.io/github/downloads/f0ng/captcha-killer-modified/total?label=Downloads)](https://github.com/f0ng/captcha-killer-modified/releases)
+[![Repo tags](https://img.shields.io/github/v/tag/f0ng/captcha-killer-modified?label=Latest)](https://github.com/f0ng/captcha-killer-modified/tags)
+[![Downloads latest total](https://img.shields.io/github/downloads/f0ng/captcha-killer-modified/latest/total?label=Downloads@latest)](https://github.com/f0ng/captcha-killer-modified/releases)
+
+
 
 ## 原项目地址：  https://github.com/c0ny1/captcha-killer
 
